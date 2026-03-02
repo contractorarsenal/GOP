@@ -2,13 +2,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // HERO SLIDESHOW
 (function(){
-  var imgs=[
+  var isMobile=window.innerWidth<=768;
+  var imgs=isMobile?[
     'https://github.com/user-attachments/assets/edc5689a-cc10-43bc-8f87-94d6bda41c6c',
     'https://github.com/user-attachments/assets/594c9943-683b-40e5-8a3e-a8ce4863684b',
     'https://github.com/user-attachments/assets/2580df62-14e5-4881-a9ec-a0139858db0a',
     'https://github.com/user-attachments/assets/76ce2e78-4462-41d4-82ba-4cb5584ec370',
     'https://github.com/user-attachments/assets/deedef0b-42ae-4114-9a8f-1952c4f5044b',
     'https://github.com/user-attachments/assets/c3b91a44-8db6-40e8-a0db-5de35dd7b4cf'
+  ]:[
+    'https://github.com/user-attachments/assets/00d56edd-0ed4-4148-94b9-dff7211c17cb',
+    'https://github.com/user-attachments/assets/b0e66ae2-42a5-4ac5-bdb1-d88221c6ab3a'
   ];
   var container=document.getElementById('heroSlides');
   if(!container) return;
