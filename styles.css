@@ -429,6 +429,33 @@ footer{background:var(--dark1);border-top:1px solid rgba(201,168,76,0.2);padding
   .tw-line{white-space:nowrap;font-size:0.92em}
   #hero{background-position:center 25%;background-size:170% auto}
 
+  /* ── MOBILE CONTENT REDUCTION ── */
+
+  /* Hero: hide stat numbers block and chat mockup */
+  .hero-stats{display:none}
+  .hero-chat{display:none}
+
+  /* Reviews: show only first 3 cards */
+  .reviews-grid .review-card:nth-child(n+4){display:none}
+
+  /* FAQ: hide second column (show only 6 FAQs) */
+  .faq-cols > div:nth-child(2){display:none}
+
+  /* Pricing: hide dollar amounts on mobile */
+  .price-amount{display:none}
+
+  /* Heavy sections: hide entirely on mobile */
+  #financing,
+  #certifications,
+  #team,
+  #blog,
+  #morereviews,
+  #beforeafter,
+  #process,
+  #brands,
+  #servicedetails,
+  #socialproof{display:none}
+
 }
 @media(max-width:480px){
   .services-grid{grid-template-columns:1fr}
@@ -439,6 +466,18 @@ footer{background:var(--dark1);border-top:1px solid rgba(201,168,76,0.2);padding
   .tw-line{white-space:nowrap;font-size:0.88em}
   #hero{background-position:center 20%;background-size:210% auto}
 
+}
+
+/* ── INLINE GRID MOBILE OVERRIDES ──
+   Target sections that use inline style grids so they
+   stack properly on narrow screens.
+   ───────────────────────────────── */
+@media(max-width:768px){
+  /* Pricing cards: 3-col → 1-col */
+  #pricing [style*="grid-template-columns:repeat(3"]{grid-template-columns:1fr!important}
+
+  /* Local "Your Neighbors" section: 2-col → 1-col */
+  #local [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}
 }
 
 /* ============================
