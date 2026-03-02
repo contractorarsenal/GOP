@@ -57,17 +57,23 @@ section{padding:5rem 2rem}
 /* HERO */
 #hero{
   padding-top:7rem;padding-bottom:4rem;
-  background:
-    linear-gradient(160deg,rgba(4,16,8,0.58) 0%,rgba(8,28,14,0.4) 40%,rgba(6,20,10,0.36) 70%,rgba(4,16,8,0.62) 100%),
-    url('https://github.com/user-attachments/assets/9ea23acd-1f05-4c47-b330-289e70f9a752') center/cover no-repeat;
+  background:var(--dark1) url('https://github.com/user-attachments/assets/edc5689a-cc10-43bc-8f87-94d6bda41c6c') center/cover no-repeat;
   position:relative;overflow:hidden;
 }
-#hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 15% 55%,rgba(201,168,76,0.16) 0%,transparent 55%)}
-.hero-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1.05fr;gap:4rem;align-items:center;position:relative;z-index:1}
+/* Crossfade slideshow layers — sit between static fallback bg and overlay */
+.hero-slides{position:absolute;inset:0;z-index:1}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center 35%;opacity:0;transition:opacity 1.8s ease}
+.hero-slide.active{opacity:1}
+/* Dark gradient + gold radial overlay — stays above slides */
+#hero::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    radial-gradient(ellipse at 15% 55%,rgba(201,168,76,0.15) 0%,transparent 55%),
+    linear-gradient(160deg,rgba(4,16,8,0.68) 0%,rgba(8,28,14,0.5) 40%,rgba(6,20,10,0.44) 70%,rgba(4,16,8,0.72) 100%)}
+.hero-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1.05fr;gap:4rem;align-items:center;position:relative;z-index:3}
 .hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(10,32,16,0.85);border:1px solid rgba(201,168,76,0.4);border-radius:20px;padding:0.35rem 1rem;font-size:0.75rem;font-weight:600;color:var(--gold3);margin-bottom:1.5rem;backdrop-filter:blur(8px)}
 .hero-badge::before{content:'✦';font-size:0.7rem;color:var(--gold)}
 .hero-title{font-size:clamp(2.4rem,4.5vw,4rem);font-weight:800;line-height:1.15;color:#fff;letter-spacing:-0.025em;text-shadow:2px 4px 16px rgba(0,0,0,0.4)}
-.tw-line{display:block;min-height:1.55em;max-width:100%}
+.tw-line{display:block;min-height:1.15em;max-width:100%;white-space:nowrap;word-break:normal;overflow-wrap:normal;font-size:clamp(2rem,4vw,3.2rem)}
 .tw-text{color:var(--gold3)}
 .tw-cursor{display:inline-block;width:0;overflow:visible;transform:translateX(2px)}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
@@ -147,8 +153,8 @@ section{padding:5rem 2rem}
 /* ABOUT */
 #about{background:linear-gradient(135deg,var(--light1) 0%,var(--light2) 50%,var(--light1) 100%)}
 .about-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:5rem;align-items:center}
-.about-img-wrapper{border-radius:16px;overflow:hidden;border:2px solid rgba(165,129,38,0.35);aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--light2),var(--light3));box-shadow:0 8px 32px rgba(30,122,62,0.2)}
-.about-img-wrapper img{width:100%;height:100%;object-fit:contain;padding:1.5rem}
+.about-img-wrapper{border-radius:16px;overflow:hidden;border:2px solid rgba(165,129,38,0.35);box-shadow:0 8px 32px rgba(30,122,62,0.2)}
+.about-img-wrapper img{width:100%;display:block;object-fit:cover;padding:0}
 .about-label{font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem}
 .about-title{font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;color:var(--text);line-height:1.2;margin-bottom:1rem}
 .about-title span{color:var(--gold)}
@@ -425,9 +431,11 @@ footer{background:var(--dark1);border-top:1px solid rgba(201,168,76,0.2);padding
   .footer-top{grid-template-columns:1fr;gap:2rem}
   .footer-bottom{flex-direction:column;align-items:flex-start}
 
-  /* Hero: prevent type line wrapping + improve mobile hero image framing */
-  .tw-line{white-space:nowrap;font-size:0.92em}
-  #hero{background-position:center 25%;background-size:170% auto}
+  /* Hero: typing line — font-size override for mobile (base already sets nowrap) */
+  .tw-line{font-size:clamp(1rem,5.2vw,1.55rem);min-height:1.4em}
+  /* Hero background: better mobile framing */
+  #hero{background-position:center top}
+  .hero-slide{background-position:center top}
 
   /* ── MOBILE CONTENT REDUCTION ── */
 
@@ -463,8 +471,9 @@ footer{background:var(--dark1);border-top:1px solid rgba(201,168,76,0.2);padding
   .testi-wrap iframe{width:140px;height:249px}
   .areas-grid{grid-template-columns:1fr 1fr}
 
-  .tw-line{white-space:nowrap;font-size:0.88em}
-  #hero{background-position:center 20%;background-size:210% auto}
+  .tw-line{font-size:clamp(0.9rem,4.8vw,1.35rem);min-height:1.4em}
+  #hero{background-position:center top}
+  .hero-slide{background-position:center top}
 
 }
 
