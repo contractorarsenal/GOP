@@ -523,6 +523,11 @@ footer{background:var(--dark1);border-top:1px solid rgba(201,168,76,0.2);padding
 
   /* Local "Your Neighbors" section: 2-col → 1-col */
   #local [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}
+
+  /* Services page new sections: 3-col → 1-col */
+  #process [style*="grid-template-columns:repeat(3"]{grid-template-columns:1fr!important}
+  #svc-gallery [style*="grid-template-columns:repeat(3"]{grid-template-columns:1fr!important}
+  #svc-reviews [style*="grid-template-columns:repeat(3"]{grid-template-columns:1fr!important}
 }
 
 /* ============================
