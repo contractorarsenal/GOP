@@ -61,6 +61,7 @@
     <a href="tel:4257258134" class="mmcta-call" onclick="closeMobileMenu()">📞 Call (425) 725-8134</a>
     <a href="contact.html#finalcta" class="mmcta-est" onclick="closeMobileMenu()">📋 Get Free Estimate</a>
   </div>
+</div>
 
 <section class="page-hero" id="hero">
   <div class="hero-slides" id="heroSlides"></div>
@@ -117,7 +118,7 @@
         <div class="cf-form">
           <div class="cf-form-title">Request a Free Estimate</div>
           <div class="cf-form-sub">Fill out the form and we'll be in touch shortly.</div>
-          <form action="mailto:goldenoakpainting@gmail.com" method="post" enctype="text/plain">
+          <form action="https://usebasin.com/f/01b1b0422645" method="POST">
             <div class="cf-row">
               <div class="cf-field">
                 <label class="cf-label" for="cf-name">Your Name</label>
@@ -125,7 +126,7 @@
               </div>
               <div class="cf-field">
                 <label class="cf-label" for="cf-phone">Phone Number</label>
-                <input class="cf-input" type="tel" id="cf-phone" name="phone" placeholder="(425) 000-0000">
+                <input class="cf-input" type="tel" id="cf-phone" name="phone" placeholder="(425) 000-0000" required>
               </div>
             </div>
             <div class="cf-field">
@@ -133,27 +134,12 @@
               <input class="cf-input" type="email" id="cf-email" name="email" placeholder="jane@example.com" required>
             </div>
             <div class="cf-field">
-              <label class="cf-label" for="cf-service">Service Needed</label>
-              <select class="cf-select" id="cf-service" name="service">
-                <option value="">Select a service...</option>
-                <option>Exterior Painting</option>
-                <option>Interior Painting</option>
-                <option>Cabinet Refinishing</option>
-                <option>Deck Refinishing</option>
-                <option>Drywall Repair</option>
-                <option>Popcorn Ceiling Removal</option>
-                <option>Commercial Painting</option>
-                <option>Color Consultation</option>
-                <option>Other / Not Sure</option>
-              </select>
+              <label class="cf-label" for="cf-address">Property Address</label>
+              <input class="cf-input" type="text" id="cf-address" name="address" placeholder="123 Main St, Bothell, WA 98011" required>
             </div>
             <div class="cf-field">
-              <label class="cf-label" for="cf-city">City / Area</label>
-              <input class="cf-input" type="text" id="cf-city" name="city" placeholder="e.g. Bothell, Kirkland, Edmonds...">
-            </div>
-            <div class="cf-field">
-              <label class="cf-label" for="cf-msg">Tell Us About Your Project</label>
-              <textarea class="cf-textarea" id="cf-msg" name="message" placeholder="Brief description of what you need done, approximate size, timeline, etc."></textarea>
+              <label class="cf-label" for="cf-memo">Tell Us About Your Project</label>
+              <textarea class="cf-textarea" id="cf-memo" name="memo" placeholder="Brief description of what you need done, approximate size, timeline, etc."></textarea>
             </div>
             <button type="submit" class="cf-submit">Send My Estimate Request →</button>
             <div class="cf-note">We respond within 24 hours. Free estimate, no obligation.</div>
