@@ -118,7 +118,7 @@
         <div class="cf-form">
           <div class="cf-form-title">Request a Free Estimate</div>
           <div class="cf-form-sub">Fill out the form and we'll be in touch shortly.</div>
-          <form action="https://usebasin.com/f/01b1b0422645" method="POST">
+          <form id="contactForm">
             <div class="cf-row">
               <div class="cf-field">
                 <label class="cf-label" for="cf-name">Your Name</label>
@@ -141,9 +141,44 @@
               <label class="cf-label" for="cf-memo">Tell Us About Your Project</label>
               <textarea class="cf-textarea" id="cf-memo" name="memo" placeholder="Brief description of what you need done, approximate size, timeline, etc."></textarea>
             </div>
-            <button type="submit" class="cf-submit">Send My Estimate Request →</button>
+            <button type="submit" class="cf-submit" id="cfSubmitBtn">Send My Estimate Request →</button>
+            <p id="cfStatus" style="display:none;margin-top:1rem;padding:0.75rem 1rem;border-radius:8px;font-size:0.9rem;font-weight:500"></p>
             <div class="cf-note">We respond within 24 hours. Free estimate, no obligation.</div>
           </form>
+          <script>
+            document.getElementById('contactForm').addEventListener('submit', async function(e) {
+              e.preventDefault();
+              const btn = document.getElementById('cfSubmitBtn');
+              const status = document.getElementById('cfStatus');
+              btn.disabled = true;
+              btn.textContent = 'Sending…';
+              try {
+                const res = await fetch('https://usebasin.com/f/01b1b0422645', {
+                  method: 'POST',
+                  body: new FormData(this)
+                });
+                if (res.ok) {
+                  status.textContent = '✅ Thanks! Your message was sent. We\'ll be in touch within 24 hours.';
+                  status.style.background = 'rgba(52,168,83,0.12)';
+                  status.style.color = '#34A853';
+                  status.style.border = '1px solid rgba(52,168,83,0.3)';
+                  status.style.display = 'block';
+                  this.reset();
+                  btn.textContent = 'Sent!';
+                } else {
+                  throw new Error('bad response');
+                }
+              } catch {
+                status.textContent = '❌ Something went wrong. Please call us at (425) 725-8134.';
+                status.style.background = 'rgba(234,67,53,0.1)';
+                status.style.color = '#EA4335';
+                status.style.border = '1px solid rgba(234,67,53,0.3)';
+                status.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = 'Send My Estimate Request →';
+              }
+            });
+          </script>
         </div>
       </div>
     </div>
