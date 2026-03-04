@@ -383,6 +383,7 @@ footer{background:var(--dark1);border-top:1px solid rgba(201,168,76,0.2);padding
 .footer-col-title{font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold2);margin-bottom:1rem}
 .footer-links{list-style:none;display:flex;flex-direction:column;gap:0.55rem}
 .footer-links a{font-size:0.83rem;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s}
+.footer-links li{font-size:0.83rem;color:rgba(255,255,255,0.45)}
 .footer-links a:hover{color:var(--gold3)}
 .footer-bottom{border-top:1px solid rgba(201,168,76,0.12);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
 .footer-copy{font-size:0.78rem;color:rgba(255,255,255,0.28)}
