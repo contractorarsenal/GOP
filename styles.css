@@ -26,7 +26,7 @@ nav{position:fixed;top:3px;left:0;right:0;z-index:100;background:rgba(10,32,16,0
 .nav-logo{display:flex;align-items:center;justify-content:center;text-decoration:none}
 .nav-logo img{height:68px;width:auto}
 .nav-right{display:flex;gap:0.6rem;align-items:center;justify-content:flex-end}
-.nav-btn{padding:0.45rem 1rem;border-radius:20px;font-size:0.82rem;font-weight:600;text-decoration:none;border:1.5px solid rgba(201,168,76,0.45);color:var(--gold3);background:transparent;cursor:pointer;display:flex;align-items:center;gap:0.4rem;transition:all 0.2s}
+.nav-btn{padding:0.45rem 1rem;border-radius:20px;font-size:0.82rem;font-weight:600;text-decoration:none;border:1.5px solid rgba(201,168,76,0.5);color:rgba(255,255,255,0.9)!important;background:transparent;cursor:pointer;display:flex;align-items:center;gap:0.4rem;transition:all 0.2s}
 .nav-btn:hover{border-color:var(--gold3);background:rgba(201,168,76,0.12)}
 .nav-btn-primary{background:var(--gold);color:#0a2010;border:none;padding:0.5rem 1.15rem;border-radius:20px;font-size:0.82rem;font-weight:800;text-decoration:none;display:flex;align-items:center;gap:0.4rem;transition:all 0.2s}
 .nav-btn-primary:hover{background:var(--gold3);transform:translateY(-1px)}
@@ -576,7 +576,7 @@ a, p, li, h1, h2, h3, h4, h5, h6, .chat-bubble, .footer-desc {
 
 /* Force footer link/contact colors — override iOS/browser defaults */
 a.footer-contact-item{color:rgba(255,255,255,0.55)!important;text-decoration:none!important}
-a[href^="tel:"],a[href^="mailto:"]{color:inherit}
+a[href^="tel:"]:not(.nav-btn),a[href^="mailto:"]:not(.nav-btn){color:inherit}
 
 /* Footer mobile size fixes */
 @media(max-width:768px){
