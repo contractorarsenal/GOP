@@ -10,13 +10,13 @@
 <link rel="canonical" href="https://www.goldenoakpainting.com/contact.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Contact Golden Oak Painting | Free Estimate in Snohomish & King County">
-<meta property="og:description" content="Request a free painting estimate from Golden Oak Painting. Serving Bothell, Kirkland, Edmonds, Lynnwood, Everett and all of Snohomish and King County, WA. Call (425) 725-8134 or fill out our form. We ...">
+<meta property="og:description" content="Request a free painting estimate from Golden Oak Painting. Serving Bothell, Kirkland, Edmonds, Lynnwood, Everett and all of Snohomish and King County, WA. Call (425) 725-8134 or fill out our form. We respond within 24 hours.">
 <meta property="og:image" content="https://cdn.prod.website-files.com/67cbada18d07464c05c5ebd4/68ad2a985d8bb816f4c9b958_GOP%20-%20Main%20Logo%20Transparent%20(1).png">
 <meta property="og:url" content="https://www.goldenoakpainting.com/contact.html">
 <meta property="og:site_name" content="Golden Oak Painting">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Contact Golden Oak Painting | Free Estimate in Snohomish & King County">
-<meta name="twitter:description" content="Request a free painting estimate from Golden Oak Painting. Serving Bothell, Kirkland, Edmonds, Lynnwood, Everett and all of Snohomish and King County, WA. Call (425) 725-8134 or fill out our form. We ...">
+<meta name="twitter:description" content="Request a free painting estimate from Golden Oak Painting. Serving Bothell, Kirkland, Edmonds, Lynnwood, Everett and all of Snohomish and King County, WA. Call (425) 725-8134 or fill out our form. We respond within 24 hours.">
 <meta name="twitter:image" content="https://cdn.prod.website-files.com/67cbada18d07464c05c5ebd4/68ad2a985d8bb816f4c9b958_GOP%20-%20Main%20Logo%20Transparent%20(1).png">
 <script type="application/ld+json">
 {
@@ -56,7 +56,6 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
 
 <div class="progress-bar" id="progressBar"></div>
 
@@ -165,7 +164,15 @@
         <div class="cf-form">
           <div class="cf-form-title">Request a Free Estimate</div>
           <div class="cf-form-sub">Fill out the form and we'll be in touch shortly.</div>
-          <form id="contactForm">
+          <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+            <!-- Web3Forms hidden fields -->
+            <input type="hidden" name="access_key" value="5a7b823c-06ee-4ce2-bd19-da9f4ec8ee7c">
+            <input type="hidden" name="subject" value="New Estimate Request - Golden Oak Painting">
+            <input type="hidden" name="redirect" value="false">
+            <input type="hidden" name="from_name" value="Golden Oak Painting Website">
+            <!-- Honeypot spam prevention -->
+            <input type="checkbox" name="botcheck" style="display:none">
+
             <div class="cf-row">
               <div class="cf-field">
                 <label class="cf-label" for="cf-name">Your Name</label>
@@ -196,12 +203,13 @@
             </div>
             <div class="cf-field">
               <label class="cf-label" for="cf-memo">Tell Us About Your Project</label>
-              <textarea class="cf-textarea" id="cf-memo" name="memo" placeholder="Brief description of what you need done, approximate size, timeline, etc."></textarea>
+              <textarea class="cf-textarea" id="cf-memo" name="message" placeholder="Brief description of what you need done, approximate size, timeline, etc."></textarea>
             </div>
             <button type="submit" class="cf-submit" id="cfSubmitBtn">Send My Estimate Request →</button>
             <p id="cfStatus" style="display:none;margin-top:1rem;padding:0.75rem 1rem;border-radius:8px;font-size:0.9rem;font-weight:500"></p>
             <div class="cf-note">We respond within 24 hours. Free estimate, no obligation.</div>
           </form>
+
           <script>
             document.getElementById('contactForm').addEventListener('submit', async function(e) {
               e.preventDefault();
@@ -210,11 +218,12 @@
               btn.disabled = true;
               btn.textContent = 'Sending…';
               try {
-                const res = await fetch('https://usebasin.com/f/01b1b0422645', {
+                const res = await fetch('https://api.web3forms.com/submit', {
                   method: 'POST',
                   body: new FormData(this)
                 });
-                if (res.ok) {
+                const data = await res.json();
+                if (data.success) {
                   status.textContent = '✅ Thanks! Your message was sent. We\'ll be in touch within 24 hours.';
                   status.style.background = 'rgba(52,168,83,0.12)';
                   status.style.color = '#34A853';
@@ -223,9 +232,9 @@
                   this.reset();
                   btn.textContent = 'Sent!';
                 } else {
-                  throw new Error('bad response');
+                  throw new Error(data.message || 'Submission failed');
                 }
-              } catch {
+              } catch(err) {
                 status.textContent = '❌ Something went wrong. Please call us at (425) 725-8134.';
                 status.style.background = 'rgba(234,67,53,0.1)';
                 status.style.color = '#EA4335';
@@ -346,25 +355,14 @@
     </div>
     <div class="footer-bottom">
       <div class="footer-copy">© 2026 Golden Oak Painting. All rights reserved. Serving Snohomish & King County, WA.</div>
-      <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div><div style="font-size:0.72rem;color:rgba(255,255,255,0.2)">Developed by <a href="https://contractorarsenal.com" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.35);text-decoration:none">ContractorArsenal.com</a></div>
+      <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+      <div style="font-size:0.72rem;color:rgba(255,255,255,0.2)">Developed by <a href="https://contractorarsenal.com" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.35);text-decoration:none">ContractorArsenal.com</a></div>
     </div>
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="script.js"></script>
+<script src="script.js"></script>
 <script src="mobile-menu.js"></script>
-<script type="text/javascript">
-  function configureAhoy() {
-    ahoy.configure({
-      visitsUrl: "https://usebasin.com/ahoy/visits",
-      eventsUrl: "https://usebasin.com/ahoy/events",
-      page: "01b1b0422645"
-    });
-    ahoy.trackView();
-    ahoy.trackSubmits();
-  }
-</script>
-<script src="https://cdn.jsdelivr.net/npm/ahoy.js@0.3.9/dist/ahoy.min.js" async defer onload="configureAhoy()"></script>
 
 </body>
 </html>
