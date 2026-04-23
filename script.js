@@ -79,7 +79,7 @@ window.addEventListener('scroll',function(){
   document.querySelectorAll('.nav-links a').forEach(function(a){
     a.classList.remove('active');
     var href=a.getAttribute('href');
-    if(!href||href==='#') return;
+    if(!href||href==='#'||href.charAt(0)!=='#') return;
     var s=document.querySelector(href);
     if(s&&window.scrollY>=s.offsetTop-120&&window.scrollY<s.offsetTop+s.offsetHeight-120)
       a.classList.add('active');
