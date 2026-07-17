@@ -315,6 +315,7 @@ section{padding:5rem 2rem}
 .testi-wrap{flex-shrink:0;border-radius:12px;overflow:hidden;border:2px solid rgba(165,129,38,0.35);transition:all 0.2s;box-shadow:0 4px 16px rgba(30,122,62,0.12)}
 .testi-wrap:hover{border-color:var(--gold);box-shadow:0 8px 28px rgba(30,122,62,0.22);transform:translateY(-2px)}
 .testi-wrap iframe{display:block;border:none;width:200px;height:356px}
+.testi-cta{text-align:center;margin-top:2rem}
 
 /* COMPARE */
 #compare{background:linear-gradient(160deg,var(--dark3) 0%,var(--dark2) 50%,var(--dark3) 100%)}
