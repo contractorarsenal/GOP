@@ -219,8 +219,11 @@
           </form>
 
           <script>
+            let contactSubmitting = false;
             document.getElementById('contactForm').addEventListener('submit', async function(e) {
               e.preventDefault();
+              if (contactSubmitting) return;
+              contactSubmitting = true;
               const btn = document.getElementById('cfSubmitBtn');
               const status = document.getElementById('cfStatus');
               btn.disabled = true;
@@ -239,6 +242,9 @@
                   status.style.display = 'block';
                   this.reset();
                   btn.textContent = 'Sent!';
+                  try {
+                    if (typeof gtag === 'function') gtag('event', 'generate_lead', { form_id: 'contact' });
+                  } catch (trackErr) {}
                 } else {
                   throw new Error(data.message || 'Submission failed');
                 }
@@ -248,6 +254,7 @@
                 status.style.color = '#EA4335';
                 status.style.border = '1px solid rgba(234,67,53,0.3)';
                 status.style.display = 'block';
+                contactSubmitting = false;
                 btn.disabled = false;
                 btn.textContent = 'Send My Estimate Request →';
               }
