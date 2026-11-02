@@ -1,4 +1,24 @@
+# Files in the static assets upload that must never be served publicly.
+# Syntax is gitignore-style. Public website files are everything NOT listed here.
+
+# Version control and local tooling
+.git
+.gitignore
+.DS_Store
+.wrangler
+.dev.vars*
+.env*
+node_modules
+package.json
+package-lock.json
+
+# Project and internal documentation
+CLAUDE.md
+AGENTS.md
 README.md
 gitignore.txt
+
+# Worker source and deploy configuration
+.assetsignore
 worker.js
 wrangler.jsonc
