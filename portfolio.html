@@ -116,6 +116,7 @@
     <a href="tel:4257258134" class="mmcta-call" onclick="closeMobileMenu()">📞 Call (425) 725-8134</a>
     <a href="/contact" class="mmcta-est" onclick="closeMobileMenu()">📋 Get Free Estimate</a>
   </div>
+</div>
 
 <section id="hero">
   <div class="hero-inner">
@@ -438,6 +439,12 @@ We bring samples to your home so you can see exactly how colors look in your lig
     </div>
   </div>
 </footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lbImg" src="" alt="" onclick="event.stopPropagation()">
+  <div class="lb-cap" id="lbCap"></div>
+  <div class="lb-close" onclick="closeLightbox()">✕</div>
+</div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="script.js"></script>
 <script src="mobile-menu.js"></script>
