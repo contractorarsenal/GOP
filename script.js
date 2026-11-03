@@ -112,4 +112,21 @@ function toggleFaq(el){
 }
 window.toggleFaq=toggleFaq;
 
+// ANALYTICS: phone and email link clicks (fixed parameters only; no link text or URLs)
+if(!window.gopContactTracking){
+  window.gopContactTracking=true;
+  document.addEventListener('click',function(e){
+    try{
+      if(!e.target||!e.target.closest||typeof gtag!=='function') return;
+      var a=e.target.closest('a[href]');
+      if(!a) return;
+      var href=a.getAttribute('href')||'';
+      var name=href.indexOf('tel:')===0?'phone_click':href.indexOf('mailto:')===0?'email_click':'';
+      if(!name) return;
+      var loc=a.closest('nav')?'nav':a.closest('header')?'header':a.closest('footer')?'footer':'body';
+      gtag('event',name,{link_location:loc,transport_type:'beacon'});
+    }catch(err){}
+  });
+}
+
 });

@@ -91,7 +91,7 @@
       <li><a href="/services">Services</a></li>
     </ul>
     <a href="/#hero" class="nav-logo">
-      <img src="https://cdn.prod.website-files.com/67cbada18d07464c05c5ebd4/68ad2a985d8bb816f4c9b958_GOP%20-%20Main%20Logo%20Transparent%20(1).png" alt="Golden Oak Painting">
+      <img width="1080" height="1080" src="https://cdn.prod.website-files.com/67cbada18d07464c05c5ebd4/68ad2a985d8bb816f4c9b958_GOP%20-%20Main%20Logo%20Transparent%20(1).png" alt="Golden Oak Painting">
     </a>
     <div class="nav-right">
       <a href="tel:4257258134" class="nav-btn">
@@ -219,8 +219,11 @@
           </form>
 
           <script>
+            let contactSubmitting = false;
             document.getElementById('contactForm').addEventListener('submit', async function(e) {
               e.preventDefault();
+              if (contactSubmitting) return;
+              contactSubmitting = true;
               const btn = document.getElementById('cfSubmitBtn');
               const status = document.getElementById('cfStatus');
               btn.disabled = true;
@@ -239,6 +242,9 @@
                   status.style.display = 'block';
                   this.reset();
                   btn.textContent = 'Sent!';
+                  try {
+                    if (typeof gtag === 'function') gtag('event', 'generate_lead', { form_id: 'contact' });
+                  } catch (trackErr) {}
                 } else {
                   throw new Error(data.message || 'Submission failed');
                 }
@@ -248,6 +254,7 @@
                 status.style.color = '#EA4335';
                 status.style.border = '1px solid rgba(234,67,53,0.3)';
                 status.style.display = 'block';
+                contactSubmitting = false;
                 btn.disabled = false;
                 btn.textContent = 'Send My Estimate Request →';
               }
@@ -261,7 +268,7 @@
 
 <section id="finalcta">
   <div class="finalcta-inner reveal">
-    <div class="finalcta-logo"><img src="https://cdn.prod.website-files.com/67cbada18d07464c05c5ebd4/68ad2a985d8bb816f4c9b958_GOP%20-%20Main%20Logo%20Transparent%20(1).png" alt="Golden Oak Painting"></div>
+    <div class="finalcta-logo"><img width="1080" height="1080" src="https://cdn.prod.website-files.com/67cbada18d07464c05c5ebd4/68ad2a985d8bb816f4c9b958_GOP%20-%20Main%20Logo%20Transparent%20(1).png" alt="Golden Oak Painting"></div>
     <h2 class="finalcta-title">Ready to Transform Your <span>Home?</span></h2>
     <p class="finalcta-sub">Join 100+ happy Washington homeowners who trust Golden Oak Painting for beautiful, long-lasting results. Get your free estimate today. No pressure, no obligation, just a clear and honest quote.</p>
     <div class="finalcta-btns">
@@ -313,7 +320,7 @@
   <div class="footer-inner">
     <div class="footer-top">
       <div>
-        <img src="https://cdn.prod.website-files.com/67cbada18d07464c05c5ebd4/68ad2a985d8bb816f4c9b958_GOP%20-%20Main%20Logo%20Transparent%20(1).png" alt="Golden Oak Painting" class="footer-brand">
+        <img width="1080" height="1080" src="https://cdn.prod.website-files.com/67cbada18d07464c05c5ebd4/68ad2a985d8bb816f4c9b958_GOP%20-%20Main%20Logo%20Transparent%20(1).png" alt="Golden Oak Painting" class="footer-brand">
         <div class="footer-brand-name">Golden Oak Painting</div>
         <p class="footer-desc">Locally owned painting company serving Snohomish and King County, WA. Licensed, insured, EPA Lead Safe Certified, and backed by a 5 year workmanship warranty.</p>
         <a href="tel:4257258134" class="footer-contact-item"><span>📞</span>(425) 725-8134</a>
