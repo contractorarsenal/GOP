@@ -186,7 +186,7 @@ form.addEventListener('submit', function(e) {
       throw new Error(data.message || 'Submission failed');
     }
   }).catch(function() {
-    status.textContent = '❌ Something went wrong. Please call us at (425) 725-8134.';
+    status.textContent = '❌ Something went wrong. Please call us now.';
     status.classList.add('show', 'bad');
     submitting = false;
     btn.disabled = false;
