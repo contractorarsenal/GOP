@@ -36,13 +36,16 @@
       <h1 class="goml-h1">Get <span>$1,000 Off</span> Your Painting Project</h1>
       <p class="goml-sub">Answer 3 quick questions for your free, no-pressure estimate.</p>
 
-      <div class="goml-offer-card">
-        <div class="goml-offer-top">
+      <div class="goml-ticket">
+        <div class="goml-ticket-top">
           <div class="goml-offer-label">Mailer Offer</div>
           <div class="goml-offer-cities">Redmond &middot; Kirkland &middot; Bellevue</div>
         </div>
-        <div class="goml-offer-amount">$1,000 OFF</div>
-        <div class="goml-offer-scope">Your next painting project</div>
+        <div class="goml-ticket-perf"></div>
+        <div class="goml-ticket-bottom">
+          <div class="goml-offer-amount">$1,000 OFF</div>
+          <div class="goml-offer-scope">On qualifying painting projects</div>
+        </div>
       </div>
 
       <div class="goml-bullets">
@@ -202,34 +205,44 @@
       <div class="goml-section-title">Real work for <span>Eastside</span> homes</div>
     </div>
 
-    <div class="goml-sub-label goml-reveal">Hear From Our Customers</div>
-    <div class="goml-video-grid">
-      <div class="goml-video-card goml-reveal" data-video-id="4YASAHGElL4" data-caption="Exterior Painting — Customer Review">
-        <div class="goml-video-frame">
-          <img class="goml-video-thumb" src="https://i.ytimg.com/vi/4YASAHGElL4/hqdefault.jpg" alt="Exterior painting customer review video thumbnail" loading="lazy">
-          <button type="button" class="goml-play-btn" aria-label="Play exterior painting customer review video">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          </button>
-        </div>
-        <div class="goml-video-cap">Exterior Painting — Customer Review</div>
-      </div>
-      <div class="goml-video-card goml-reveal" data-video-id="6cuHCz14meA" data-caption="Interior Painting — Customer Review">
-        <div class="goml-video-frame">
-          <img class="goml-video-thumb" src="https://i.ytimg.com/vi/6cuHCz14meA/hqdefault.jpg" alt="Interior painting customer review video thumbnail" loading="lazy">
-          <button type="button" class="goml-play-btn" aria-label="Play interior painting customer review video">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          </button>
-        </div>
-        <div class="goml-video-cap">Interior Painting — Customer Review</div>
-      </div>
-    </div>
+    <div class="goml-proof-layout">
 
-    <div class="goml-sub-label goml-reveal">Recent Projects</div>
-    <div class="goml-proof-grid">
-      <div class="goml-proof-card goml-reveal"><img src="https://github.com/user-attachments/assets/d16e6cbf-762d-46e4-8ebe-38a9ed447080" alt="Interior painting, living room" loading="lazy"><div class="goml-proof-cap">Interior Painting — Living Room</div></div>
-      <div class="goml-proof-card goml-reveal"><img src="https://github.com/user-attachments/assets/ff16b922-01e4-4437-a306-063b3b084278" alt="Cabinet refinishing, kitchen" loading="lazy"><div class="goml-proof-cap">Cabinet Refinishing — Kitchen</div></div>
-      <div class="goml-proof-card goml-reveal"><img src="https://github.com/user-attachments/assets/ce7e3dfd-44c2-42c7-9e99-6e33efa50797" alt="Interior painting, bedroom" loading="lazy"><div class="goml-proof-cap">Interior Painting — Bedroom</div></div>
-      <div class="goml-proof-card goml-reveal"><img src="https://github.com/user-attachments/assets/c8a838e2-2516-43b4-90f7-2a2d6cee366a" alt="Exterior painting, Seattle-area home" loading="lazy"><div class="goml-proof-cap">Exterior Painting — Curb Appeal Refresh</div></div>
+      <!-- Photos first in source order: shows first on mobile, left column on desktop -->
+      <div class="goml-proof-col">
+        <div class="goml-sub-label goml-reveal">Recent Projects</div>
+        <div class="goml-proof-grid">
+          <div class="goml-proof-card goml-reveal"><img src="https://github.com/user-attachments/assets/d16e6cbf-762d-46e4-8ebe-38a9ed447080" alt="Interior painting, living room" loading="lazy"><div class="goml-proof-cap">Interior Painting — Living Room</div></div>
+          <div class="goml-proof-card goml-reveal"><img src="https://github.com/user-attachments/assets/ff16b922-01e4-4437-a306-063b3b084278" alt="Cabinet refinishing, kitchen" loading="lazy"><div class="goml-proof-cap">Cabinet Refinishing — Kitchen</div></div>
+          <div class="goml-proof-card goml-reveal"><img src="https://github.com/user-attachments/assets/ce7e3dfd-44c2-42c7-9e99-6e33efa50797" alt="Interior painting, bedroom" loading="lazy"><div class="goml-proof-cap">Interior Painting — Bedroom</div></div>
+          <div class="goml-proof-card goml-reveal"><img src="https://github.com/user-attachments/assets/c8a838e2-2516-43b4-90f7-2a2d6cee366a" alt="Exterior painting, Seattle-area home" loading="lazy"><div class="goml-proof-cap">Exterior Painting — Curb Appeal Refresh</div></div>
+        </div>
+      </div>
+
+      <!-- Videos second in source order: shows underneath on mobile, right column on desktop -->
+      <div class="goml-video-col">
+        <div class="goml-sub-label goml-reveal">Hear From Our Customers</div>
+        <div class="goml-video-grid">
+          <div class="goml-video-card goml-reveal" data-video-id="4YASAHGElL4" data-caption="Exterior Painting — Customer Review">
+            <div class="goml-video-frame">
+              <img class="goml-video-thumb" src="https://i.ytimg.com/vi/4YASAHGElL4/hqdefault.jpg" alt="Exterior painting customer review video thumbnail" loading="lazy">
+              <div class="goml-video-cap">Exterior Painting — Customer Review</div>
+              <button type="button" class="goml-play-btn" aria-label="Play exterior painting customer review video">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="goml-video-card goml-reveal" data-video-id="6cuHCz14meA" data-caption="Interior Painting — Customer Review">
+            <div class="goml-video-frame">
+              <img class="goml-video-thumb" src="https://i.ytimg.com/vi/6cuHCz14meA/hqdefault.jpg" alt="Interior painting customer review video thumbnail" loading="lazy">
+              <div class="goml-video-cap">Interior Painting — Customer Review</div>
+              <button type="button" class="goml-play-btn" aria-label="Play interior painting customer review video">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
