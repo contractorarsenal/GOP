@@ -52,8 +52,9 @@
 .goml-sub{font-size:0.98rem;color:rgba(255,255,255,0.82);line-height:1.7;max-width:480px;margin-bottom:1.6rem}
 
 .goml-offer-card{background:rgba(255,255,255,0.06);border:1.5px solid rgba(201,168,76,0.4);border-radius:var(--r2);padding:1.25rem 1.4rem;backdrop-filter:blur(8px);margin-bottom:1.5rem}
-.goml-offer-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem}
+.goml-offer-top{display:flex;align-items:center;justify-content:space-between;gap:0.6rem;flex-wrap:wrap;margin-bottom:0.5rem}
 .goml-offer-label{font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6)}
+.goml-offer-cities{font-size:0.72rem;font-weight:700;color:var(--gold3);background:rgba(201,168,76,0.14);border:1px solid rgba(201,168,76,0.35);border-radius:6px;padding:0.15rem 0.55rem;white-space:nowrap}
 .goml-offer-amount{font-size:2.1rem;font-weight:800;color:var(--gold3);line-height:1;text-shadow:1px 2px 10px rgba(0,0,0,0.3)}
 .goml-offer-scope{font-size:0.86rem;color:rgba(255,255,255,0.85);margin-bottom:0.65rem}
 .goml-offer-meta{display:flex;align-items:center;justify-content:space-between;gap:0.75rem;font-size:0.78rem;color:rgba(255,255,255,0.65);border-top:1px solid rgba(255,255,255,0.12);padding-top:0.6rem;flex-wrap:wrap}
@@ -73,11 +74,54 @@
 .goml-step-help{font-size:0.83rem;color:var(--text2);margin-bottom:1.25rem}
 
 .goml-step{display:none}
-.goml-step.active{display:block;animation:gomlFadeIn 0.35s ease both}
-@keyframes gomlFadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.goml-step.active{display:block;animation:gomlStepIn 0.32s cubic-bezier(.22,.8,.36,1) both}
+.goml-step.active.dir-back{animation-name:gomlStepInBack}
+@keyframes gomlStepIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+@keyframes gomlStepInBack{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
+
+/* ── ENTRANCE: hero text, offer card, bullets, form card (on load, above the fold) ── */
+.goml-eyebrow,.goml-h1,.goml-sub{animation:gomlEnter 0.5s cubic-bezier(.22,.8,.36,1) both}
+.goml-h1{animation-delay:0.06s}
+.goml-sub{animation-delay:0.12s}
+.goml-offer-card{animation:gomlEnter 0.55s cubic-bezier(.22,.8,.36,1) both;animation-delay:0.18s}
+.goml-bullets{animation:gomlEnter 0.5s cubic-bezier(.22,.8,.36,1) both;animation-delay:0.26s}
+.goml-form-card{animation:gomlEnterScale 0.55s cubic-bezier(.22,.8,.36,1) both;animation-delay:0.2s}
+@keyframes gomlEnter{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes gomlEnterScale{from{opacity:0;transform:translateY(16px) scale(0.98)}to{opacity:1;transform:none}}
+
+/* ── PROGRESS DOTS: animate fill + a brief pulse when a step completes ── */
+.goml-step-progress .dot{transition:background-color 0.3s ease,transform 0.3s ease}
+.goml-step-progress .dot.pulse{animation:gomlDotPulse 0.4s ease}
+@keyframes gomlDotPulse{0%{transform:scaleY(1)}40%{transform:scaleY(1.9)}100%{transform:scaleY(1)}}
+
+/* ── SELECTED SERVICE/TIMELINE CARD FEEDBACK ── */
+.goml-check,.goml-radio{transition:border-color 0.15s,background-color 0.15s,transform 0.15s}
+.goml-check.pop,.goml-radio.pop{animation:gomlPop 0.28s ease}
+@keyframes gomlPop{0%{transform:scale(1)}45%{transform:scale(1.035)}100%{transform:scale(1)}}
+
+/* ── REVEAL ON SCROLL (lower sections) ── */
+.goml-reveal{opacity:1;transform:none;transition:opacity 0.55s ease,transform 0.55s ease}
+.goml-reveal.goml-pre{opacity:0;transform:translateY(22px)}
+.goml-reveal.in{opacity:1;transform:none}
+
+/* ── SUCCESS STATE ENTRANCE ── */
+.goml-success{opacity:0;transform:translateY(10px) scale(0.97)}
+.goml-success.show{opacity:1;transform:none;transition:opacity 0.4s ease,transform 0.4s cubic-bezier(.22,.8,.36,1)}
+.goml-success .big{display:inline-block}
+.goml-success.show .big{animation:gomlBigPop 0.5s cubic-bezier(.22,1.2,.36,1) 0.1s both}
+@keyframes gomlBigPop{0%{transform:scale(0.4);opacity:0}60%{transform:scale(1.15);opacity:1}100%{transform:scale(1)}}
+
+/* ── KEYBOARD FOCUS (FAQ questions are role=button, tabindex=0) ── */
+.goml-faq-q:focus-visible{outline:2.5px solid var(--green);outline-offset:2px;border-radius:6px}
+.goml-check:has(input:focus-visible),.goml-radio:has(input:focus-visible){outline:2.5px solid var(--green);outline-offset:2px}
+.goml-input:focus-visible,.goml-textarea:focus-visible{outline:none}
+
 @media (prefers-reduced-motion: reduce){
-  .goml-step.active{animation:none}
-  .goml *{transition-duration:0.01ms !important;animation-duration:0.01ms !important}
+  .goml-step.active,.goml-step.active.dir-back,
+  .goml-eyebrow,.goml-h1,.goml-sub,.goml-offer-card,.goml-bullets,.goml-form-card,
+  .goml-step-progress .dot.pulse,.goml-check.pop,.goml-radio.pop,
+  .goml-success.show .big{animation:none}
+  .goml *{transition-duration:0.01ms !important;animation-duration:0.01ms !important;scroll-behavior:auto !important}
 }
 
 .goml-check-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-bottom:0.4rem}
@@ -157,7 +201,7 @@
 .goml-process-step p{font-size:0.82rem;color:var(--text2)}
 
 /* ── PHOTO PROOF STRIP ── */
-.goml-proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.goml-proof-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
 .goml-proof-card{position:relative;border-radius:var(--r2);overflow:hidden;aspect-ratio:4/3}
 .goml-proof-card img{width:100%;height:100%;object-fit:cover}
 .goml-proof-cap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(0deg,rgba(0,0,0,0.75),transparent);color:#fff;font-size:0.78rem;font-weight:700;padding:0.9rem 0.8rem 0.6rem}
@@ -211,12 +255,22 @@
   .goml-proof-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:768px){
-  .goml-header-inner{padding:0.7rem 1.1rem}
+  .goml-header-inner{padding:0.6rem 1.1rem}
   .goml-call span.txt{display:none}
-  .goml-top{padding:1.75rem 0 2.25rem}
+  .goml-top{padding:1.1rem 0 1.5rem}
   .goml .wrap{padding:0 1.1rem}
   .goml-section{padding:2.75rem 0}
   .goml-form-card{padding:1.35rem}
+  /* Tighten the pre-form content so the form card sits close to the
+     top of the screen on phones, without removing any content. */
+  .goml-eyebrow{margin-bottom:0.65rem;padding:0.3rem 0.75rem;font-size:0.72rem}
+  .goml-h1{margin-bottom:0.55rem;font-size:clamp(1.6rem,7vw,2rem)}
+  .goml-sub{margin-bottom:0.9rem;font-size:0.88rem}
+  .goml-offer-card{padding:0.9rem 1rem;margin-bottom:0.9rem}
+  .goml-offer-amount{margin:0.1rem 0}
+  .goml-bullets{gap:0.4rem;margin-bottom:0}
+  .goml-bullet{font-size:0.8rem}
+  .goml-top-grid{gap:1.1rem}
   .goml-check-grid{grid-template-columns:1fr}
   .goml-row2{grid-template-columns:1fr}
   .goml-why-grid{grid-template-columns:1fr}

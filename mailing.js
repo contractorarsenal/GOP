@@ -7,20 +7,48 @@ var steps = Array.prototype.slice.call(form.querySelectorAll('.goml-step'));
 var dots = [document.getElementById('goml-dot-1'), document.getElementById('goml-dot-2'), document.getElementById('goml-dot-3')];
 var current = 1;
 var submitting = false;
+var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 document.getElementById('gomlPageUrl').value = window.location.href;
 
-// ── STEP NAVIGATION ──
+// ── STEP NAVIGATION (tracks direction so Next/Back animate differently) ──
 function showStep(n) {
+  var goingBack = n < current;
   steps.forEach(function(s) {
-    s.classList.toggle('active', parseInt(s.getAttribute('data-step'), 10) === n);
+    var isTarget = parseInt(s.getAttribute('data-step'), 10) === n;
+    s.classList.toggle('active', isTarget);
+    s.classList.toggle('dir-back', isTarget && goingBack);
   });
   dots.forEach(function(d, i) {
-    if (d) d.classList.toggle('done', i < n);
+    var wasDone = d && d.classList.contains('done');
+    var nowDone = i < n;
+    if (d) {
+      d.classList.toggle('done', nowDone);
+      if (!reduceMotion && nowDone && !wasDone) {
+        d.classList.remove('pulse');
+        void d.offsetWidth; // restart animation
+        d.classList.add('pulse');
+      }
+    }
   });
   current = n;
   form.querySelectorAll('.goml-step-err').forEach(function(e) { e.style.display = 'none'; });
+  // move focus to the new step's heading for keyboard/screen-reader users
+  var activeStep = form.querySelector('.goml-step.active .goml-step-title');
+  if (activeStep) { activeStep.setAttribute('tabindex', '-1'); activeStep.focus({ preventScroll: true }); }
 }
+
+// Enter key inside a step-1/2 field should advance via the visible Next
+// button rather than trigger the form's (currently hidden) submit control.
+form.addEventListener('keydown', function(e) {
+  if (e.key !== 'Enter') return;
+  if (e.target.tagName === 'TEXTAREA') return;
+  if (current < 3) {
+    e.preventDefault();
+    var nextBtn = form.querySelector('.goml-step.active [data-next]');
+    if (nextBtn) nextBtn.click();
+  }
+});
 
 function validateStep1() {
   var checked = form.querySelectorAll('input[name="services"]:checked');
@@ -94,16 +122,26 @@ form.querySelectorAll('[data-back]').forEach(function(btn) {
   });
 });
 
-// ── VISUAL SELECTED STATE (checkboxes / radios) ──
+// ── VISUAL SELECTED STATE (checkboxes / radios) + brief pop feedback ──
+function popFeedback(label) {
+  if (reduceMotion) return;
+  label.classList.remove('pop');
+  void label.offsetWidth; // restart animation
+  label.classList.add('pop');
+}
 form.querySelectorAll('.goml-check input').forEach(function(cb) {
   cb.addEventListener('change', function() {
-    cb.closest('.goml-check').classList.toggle('sel', cb.checked);
+    var label = cb.closest('.goml-check');
+    label.classList.toggle('sel', cb.checked);
+    if (cb.checked) popFeedback(label);
   });
 });
 form.querySelectorAll('.goml-radio input').forEach(function(rb) {
   rb.addEventListener('change', function() {
     form.querySelectorAll('.goml-radio').forEach(function(l) { l.classList.remove('sel'); });
-    rb.closest('.goml-radio').classList.add('sel');
+    var label = rb.closest('.goml-radio');
+    label.classList.add('sel');
+    popFeedback(label);
   });
 });
 
@@ -157,7 +195,6 @@ form.addEventListener('submit', function(e) {
 });
 
 // ── SMOOTH SCROLL TO FORM (respects reduced motion) ──
-var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 document.querySelectorAll('[data-scroll]').forEach(function(link) {
   link.addEventListener('click', function(e) {
     var targetId = link.getAttribute('href');
@@ -170,16 +207,53 @@ document.querySelectorAll('[data-scroll]').forEach(function(link) {
 });
 
 // ── FAQ ACCORDION (scoped; independent of the main site's toggleFaq) ──
+// Questions are role="button" tabindex="0" divs, so clicks AND Enter/Space
+// both need to operate them, and aria-expanded needs to stay in sync.
 var faqList = document.getElementById('gomlFaq');
 if (faqList) {
+  function toggleFaqItem(q) {
+    var item = q.parentElement;
+    var wasOpen = item.classList.contains('open');
+    faqList.querySelectorAll('.goml-faq-item').forEach(function(i) {
+      i.classList.remove('open');
+      i.querySelector('.goml-faq-q').setAttribute('aria-expanded', 'false');
+    });
+    if (!wasOpen) {
+      item.classList.add('open');
+      q.setAttribute('aria-expanded', 'true');
+    }
+  }
   faqList.querySelectorAll('.goml-faq-q').forEach(function(q) {
-    q.addEventListener('click', function() {
-      var item = q.parentElement;
-      var wasOpen = item.classList.contains('open');
-      faqList.querySelectorAll('.goml-faq-item').forEach(function(i) { i.classList.remove('open'); });
-      if (!wasOpen) item.classList.add('open');
+    q.addEventListener('click', function() { toggleFaqItem(q); });
+    q.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        toggleFaqItem(q);
+      }
     });
   });
+}
+
+// ── REVEAL ON SCROLL (why cards, process steps, photos, callout, FAQ) ──
+// Default state (no JS, or JS before this runs) is fully visible, so
+// content is never dependent on the observer to be usable. Reduced
+// motion skips the hidden/pre state entirely -- everything just shows.
+var revealEls = document.querySelectorAll('.goml-reveal');
+if (revealEls.length) {
+  if (reduceMotion || typeof IntersectionObserver === 'undefined') {
+    revealEls.forEach(function(el) { el.classList.add('in'); });
+  } else {
+    revealEls.forEach(function(el) { el.classList.add('goml-pre'); });
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function(el) { io.observe(el); });
+  }
 }
 
 });
