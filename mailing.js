@@ -234,7 +234,7 @@ if (faqList) {
   });
 }
 
-// ── REVEAL ON SCROLL (why cards, process steps, photos, callout, FAQ) ──
+// ── REVEAL ON SCROLL (video cards, photos, process steps, FAQ) ──
 // Default state (no JS, or JS before this runs) is fully visible, so
 // content is never dependent on the observer to be usable. Reduced
 // motion skips the hidden/pre state entirely -- everything just shows.
@@ -255,5 +255,29 @@ if (revealEls.length) {
     revealEls.forEach(function(el) { io.observe(el); });
   }
 }
+
+// ── CUSTOMER VIDEOS: click-to-play facade ──
+// No iframe exists in the DOM until a visitor clicks play, so the two
+// testimonial embeds never add to initial page load. Clicking swaps
+// the thumbnail for a YouTube iframe with autoplay=1 -- playback only
+// starts from that explicit click, never on page load/scroll.
+document.querySelectorAll('.goml-video-card').forEach(function(card) {
+  var btn = card.querySelector('.goml-play-btn');
+  if (!btn) return;
+  btn.addEventListener('click', function() {
+    var frame = card.querySelector('.goml-video-frame');
+    var videoId = card.getAttribute('data-video-id');
+    var caption = card.getAttribute('data-caption') || 'Customer testimonial video';
+    if (!videoId || frame.querySelector('iframe')) return;
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+    iframe.title = caption;
+    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.setAttribute('loading', 'lazy');
+    frame.innerHTML = '';
+    frame.appendChild(iframe);
+  });
+});
 
 });
