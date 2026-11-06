@@ -18,7 +18,7 @@
 }
 
 *{box-sizing:border-box}
-.goml{font-family:'Inter',sans-serif;background:var(--light1);color:var(--text);line-height:1.6;overflow-x:hidden}
+.goml{margin:0;font-family:'Inter',sans-serif;background:var(--light1);color:var(--text);line-height:1.6;overflow-x:hidden}
 .goml a{color:inherit}
 .goml img{max-width:100%;height:auto;display:block}
 .goml .wrap{max-width:1200px;margin:0 auto;padding:0 1.5rem}
@@ -35,7 +35,8 @@
 .goml-header{position:sticky;top:0;z-index:50;background:var(--dark2);border-bottom:1px solid rgba(201,168,76,0.18)}
 .goml-header-inner{display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1.5rem;max-width:1200px;margin:0 auto}
 .goml-logo img{height:38px;width:auto}
-.goml-call{display:inline-flex;align-items:center;gap:0.5rem;color:var(--gold3);font-weight:700;font-size:0.9rem;text-decoration:none}
+.goml-call{display:inline-flex;align-items:center;gap:0.5rem;color:rgba(255,255,255,0.92)!important;font-weight:700;font-size:0.9rem;text-decoration:none}
+.goml-call:hover{color:var(--gold3)}
 .goml-call svg{flex-shrink:0}
 
 /* ── HERO / OFFER + FORM SIDE-BY-SIDE ── */
