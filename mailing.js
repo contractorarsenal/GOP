@@ -11,6 +11,98 @@ var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-moti
 
 document.getElementById('gomlPageUrl').value = window.location.href;
 
+// ── OFFER TICKET: automatic scratch-off reveal over "$1,000 OFF" ──
+// The amount's real text is always in the DOM and visible by default;
+// this canvas is purely an added-on cover that only ever exists when
+// JS runs AND motion is allowed, so a JS failure or reduced motion
+// both simply leave the amount as it already was -- visible, with
+// nothing to undo. The cover never touches the headline, "On
+// qualifying painting projects" wording, or the cities badge, and it
+// is absolutely positioned so it can't change the ticket's size.
+(function() {
+  var amountEl = document.querySelector('.goml-offer-amount');
+  if (!amountEl || reduceMotion || typeof HTMLCanvasElement === 'undefined') return;
+
+  // offsetWidth/offsetHeight (not getBoundingClientRect) on purpose:
+  // the ticket's own entrance animation is still transforming (scale/
+  // rotate) at this point, and getBoundingClientRect would capture
+  // that transient, not-yet-settled size. offsetWidth/offsetHeight
+  // reflect the element's real layout size regardless of an
+  // in-progress ancestor transform, so the canvas is sized correctly
+  // from the start and stays in sync as the ticket finishes landing.
+  var w = amountEl.offsetWidth, h = amountEl.offsetHeight;
+  if (!w || !h) return;
+
+  var canvas = document.createElement('canvas');
+  canvas.className = 'goml-scratch-canvas';
+  canvas.setAttribute('aria-hidden', 'true');
+  var dpr = window.devicePixelRatio || 1;
+  canvas.width = Math.ceil(w * dpr);
+  canvas.height = Math.ceil(h * dpr);
+  canvas.style.width = w + 'px';
+  canvas.style.height = h + 'px';
+  amountEl.appendChild(canvas);
+
+  var ctx = canvas.getContext('2d');
+  if (!ctx) { canvas.remove(); return; }
+  ctx.scale(dpr, dpr);
+
+  // Gold foil cover, matching the ticket's own gold palette.
+  var grad = ctx.createLinearGradient(0, 0, w, h);
+  grad.addColorStop(0, '#f0d080');
+  grad.addColorStop(0.5, '#c9a84c');
+  grad.addColorStop(1, '#a58126');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, h);
+
+  // 3 irregular, overlapping strokes (wide, rounded, gently wobbling)
+  // that together fully clear the panel -- a coin-scratch look, not
+  // a straight wipe -- while guaranteeing a complete reveal.
+  ctx.globalCompositeOperation = 'destination-out';
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  var strokes = [
+    { y: h * 0.24, amp: h * 0.16, width: h * 0.46 },
+    { y: h * 0.52, amp: h * 0.14, width: h * 0.5 },
+    { y: h * 0.8, amp: h * 0.16, width: h * 0.46 }
+  ];
+
+  function pointOnStroke(stroke, t) {
+    return { x: t * w, y: stroke.y + Math.sin(t * Math.PI * 2.3) * stroke.amp * 0.5 };
+  }
+  function drawStroke(stroke, toT) {
+    ctx.lineWidth = stroke.width;
+    ctx.beginPath();
+    var steps = 10;
+    for (var i = 0; i <= steps; i++) {
+      var t = Math.min(toT, i / steps);
+      var p = pointOnStroke(stroke, t);
+      if (i === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+      if (toT <= i / steps) break;
+    }
+    ctx.stroke();
+  }
+
+  var duration = 950; // ms -- finishes within about one second
+  var perStroke = duration / strokes.length;
+  var start = null;
+
+  function frame(ts) {
+    if (start === null) start = ts;
+    var elapsed = ts - start;
+    if (elapsed >= duration) {
+      strokes.forEach(function(s) { drawStroke(s, 1); });
+      canvas.remove(); // reveal is done; no looping, nothing left behind
+      return;
+    }
+    var idx = Math.min(strokes.length - 1, Math.floor(elapsed / perStroke));
+    for (var i = 0; i < idx; i++) drawStroke(strokes[i], 1);
+    drawStroke(strokes[idx], (elapsed - idx * perStroke) / perStroke);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
 // ── STEP NAVIGATION (tracks direction so Next/Back animate differently) ──
 function showStep(n) {
   var goingBack = n < current;

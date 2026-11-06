@@ -54,8 +54,14 @@
 .goml-offer-cities{font-size:0.72rem;font-weight:700;color:var(--dark2);background:rgba(165,129,38,0.14);border:1px solid var(--gold);border-radius:6px;padding:0.15rem 0.55rem;white-space:nowrap}
 .goml-ticket-perf{height:0;border-top:2px dashed rgba(165,129,38,0.55);margin:0 1.3rem}
 .goml-ticket-bottom{padding:0.85rem 1.3rem 1rem}
-.goml-offer-amount{font-size:clamp(2.1rem,4.4vw,2.9rem);font-weight:800;color:var(--dark1);line-height:1;letter-spacing:-0.01em}
+.goml-offer-amount{position:relative;font-size:clamp(2.1rem,4.4vw,2.9rem);font-weight:800;color:var(--dark1);line-height:1;letter-spacing:-0.01em}
 .goml-offer-scope{font-size:0.86rem;font-weight:600;color:var(--text2);margin-top:0.4rem}
+
+/* Scratch-off reveal: this canvas is only ever created by JS, and only
+   when motion is allowed, so the "$1,000 OFF" text underneath is the
+   default, permanent state. It covers only the amount -- never the
+   headline, ticket wording, or cities -- and never affects layout. */
+.goml-scratch-canvas{position:absolute;inset:0;z-index:5;pointer-events:none}
 
 /* ── FORM CARD ── */
 .goml-form-card{background:#fff;border-radius:16px;border:1.5px solid rgba(30,122,62,0.15);box-shadow:0 12px 40px rgba(0,0,0,0.25);padding:1.75rem}
