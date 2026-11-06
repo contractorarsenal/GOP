@@ -256,6 +256,63 @@ if (revealEls.length) {
   }
 }
 
+// ── "FROM CLAIM TO FRESH PAINT": connector draws as the visitor
+// scrolls, and each step highlights exactly when the line reaches it.
+// Progress is computed from the grid's real position in the viewport
+// on every scroll/resize (rAF-throttled), not a fixed timed stagger,
+// so the line and highlight genuinely track scroll position in both
+// directions. Reduced motion shows the fully-drawn, fully-highlighted
+// state immediately and skips the scroll listener entirely.
+var processGrid = document.querySelector('.goml-process-grid');
+if (processGrid) {
+  var processSteps = Array.prototype.slice.call(processGrid.querySelectorAll('.goml-process-step'));
+  var processFills = Array.prototype.slice.call(processGrid.querySelectorAll('.goml-process-connector-fill'));
+  var processSegments = Math.max(1, processSteps.length - 1);
+
+  function isMobileProcessLayout() {
+    return window.matchMedia && window.matchMedia('(max-width: 680px)').matches;
+  }
+
+  function setProcessProgress() {
+    var rect = processGrid.getBoundingClientRect();
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var start = vh * 0.85;
+    var end = vh * 0.35;
+    var span = Math.max(1, rect.height + (start - end));
+    var scrolled = start - rect.top;
+    var p = Math.max(0, Math.min(1, scrolled / span));
+    var axis = isMobileProcessLayout() ? 'scaleY(' : 'scaleX(';
+    for (var i = 0; i < processSegments; i++) {
+      var segProgress = Math.max(0, Math.min(1, p * processSegments - i));
+      if (processFills[i]) processFills[i].style.transform = axis + segProgress + ')';
+    }
+    processSteps.forEach(function(step, i) {
+      // Step 1's threshold is a small positive value, not 0, so it only
+      // highlights once the section has actually been scrolled to --
+      // never pre-highlighted just because the page loaded.
+      var threshold = i === 0 ? 0.04 : i / processSegments;
+      step.classList.toggle('is-reached', p >= threshold);
+    });
+  }
+
+  var processTicking = false;
+  function onProcessScroll() {
+    if (processTicking) return;
+    processTicking = true;
+    requestAnimationFrame(function() { setProcessProgress(); processTicking = false; });
+  }
+
+  if (reduceMotion) {
+    var fullAxis = isMobileProcessLayout() ? 'scaleY(1)' : 'scaleX(1)';
+    processFills.forEach(function(f) { f.style.transform = fullAxis; });
+    processSteps.forEach(function(s) { s.classList.add('is-reached'); });
+  } else {
+    window.addEventListener('scroll', onProcessScroll, { passive: true });
+    window.addEventListener('resize', onProcessScroll);
+    setProcessProgress();
+  }
+}
+
 // ── CUSTOMER VIDEOS: click-to-play facade ──
 // No iframe exists in the DOM until a visitor clicks play, so the two
 // testimonial embeds never add to initial page load. Clicking swaps
