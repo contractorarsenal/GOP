@@ -1,0 +1,185 @@
+document.addEventListener('DOMContentLoaded', function() {
+
+var form = document.getElementById('gomlForm');
+if (!form) return; // scoped to /mailing only
+
+var steps = Array.prototype.slice.call(form.querySelectorAll('.goml-step'));
+var dots = [document.getElementById('goml-dot-1'), document.getElementById('goml-dot-2'), document.getElementById('goml-dot-3')];
+var current = 1;
+var submitting = false;
+
+document.getElementById('gomlPageUrl').value = window.location.href;
+
+// ── STEP NAVIGATION ──
+function showStep(n) {
+  steps.forEach(function(s) {
+    s.classList.toggle('active', parseInt(s.getAttribute('data-step'), 10) === n);
+  });
+  dots.forEach(function(d, i) {
+    if (d) d.classList.toggle('done', i < n);
+  });
+  current = n;
+  form.querySelectorAll('.goml-step-err').forEach(function(e) { e.style.display = 'none'; });
+}
+
+function validateStep1() {
+  var checked = form.querySelectorAll('input[name="services"]:checked');
+  var err = document.getElementById('gomlErr1');
+  if (checked.length === 0) {
+    if (err) err.style.display = 'block';
+    return false;
+  }
+  if (err) err.style.display = 'none';
+  return true;
+}
+
+function validateStep2() {
+  var ok = true;
+  var timelineChecked = form.querySelector('input[name="timeline"]:checked');
+  var errA = document.getElementById('gomlErr2a');
+  if (!timelineChecked) {
+    if (errA) errA.style.display = 'block';
+    ok = false;
+  } else if (errA) {
+    errA.style.display = 'none';
+  }
+  var zip = document.getElementById('gomlZip');
+  var zipField = document.getElementById('gomlZipField');
+  if (!/^[0-9]{5}$/.test(zip.value.trim())) {
+    zipField.classList.add('err');
+    ok = false;
+  } else {
+    zipField.classList.remove('err');
+  }
+  return ok;
+}
+
+function digits(s) { return (s || '').replace(/\D/g, ''); }
+
+function validateStep3() {
+  var ok = true;
+  var first = document.getElementById('gomlFirst');
+  var firstField = document.getElementById('gomlFirstField');
+  if (!first.value.trim()) { firstField.classList.add('err'); ok = false; } else { firstField.classList.remove('err'); }
+
+  var phone = document.getElementById('gomlPhone');
+  var phoneField = document.getElementById('gomlPhoneField');
+  if (digits(phone.value).length !== 10) { phoneField.classList.add('err'); ok = false; } else { phoneField.classList.remove('err'); }
+
+  var email = document.getElementById('gomlEmail');
+  var emailField = document.getElementById('gomlEmailField');
+  var emailVal = email.value.trim();
+  if (emailVal && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) { emailField.classList.add('err'); ok = false; } else { emailField.classList.remove('err'); }
+
+  var address = document.getElementById('gomlAddress');
+  var addressField = document.getElementById('gomlAddressField');
+  if (!address.value.trim()) { addressField.classList.add('err'); ok = false; } else { addressField.classList.remove('err'); }
+
+  return ok;
+}
+
+form.querySelectorAll('[data-next]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var target = parseInt(btn.getAttribute('data-next'), 10);
+    var valid = true;
+    if (current === 1) valid = validateStep1();
+    if (current === 2) valid = validateStep2();
+    if (valid) showStep(target);
+  });
+});
+
+form.querySelectorAll('[data-back]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    showStep(parseInt(btn.getAttribute('data-back'), 10));
+  });
+});
+
+// ── VISUAL SELECTED STATE (checkboxes / radios) ──
+form.querySelectorAll('.goml-check input').forEach(function(cb) {
+  cb.addEventListener('change', function() {
+    cb.closest('.goml-check').classList.toggle('sel', cb.checked);
+  });
+});
+form.querySelectorAll('.goml-radio input').forEach(function(rb) {
+  rb.addEventListener('change', function() {
+    form.querySelectorAll('.goml-radio').forEach(function(l) { l.classList.remove('sel'); });
+    rb.closest('.goml-radio').classList.add('sel');
+  });
+});
+
+// ZIP: digits only
+var zipInput = document.getElementById('gomlZip');
+if (zipInput) {
+  zipInput.addEventListener('input', function() {
+    zipInput.value = zipInput.value.replace(/\D/g, '').slice(0, 5);
+  });
+}
+
+// ── SUBMIT ──
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+  if (submitting) return;
+
+  // final full-form validation (covers direct submit / browser autofill edge cases)
+  var v1 = validateStep1(), v2 = validateStep2(), v3 = validateStep3();
+  if (!v1) { showStep(1); return; }
+  if (!v2) { showStep(2); return; }
+  if (!v3) { showStep(3); return; }
+
+  submitting = true;
+  var btn = document.getElementById('gomlSubmitBtn');
+  var status = document.getElementById('gomlStatus');
+  var originalLabel = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  status.classList.remove('show', 'ok', 'bad');
+
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    body: new FormData(form)
+  }).then(function(res) {
+    return res.json();
+  }).then(function(data) {
+    if (data.success) {
+      form.style.display = 'none';
+      document.getElementById('gomlSuccess').classList.add('show');
+      status.classList.remove('show');
+    } else {
+      throw new Error(data.message || 'Submission failed');
+    }
+  }).catch(function() {
+    status.textContent = '❌ Something went wrong. Please call us at (425) 725-8134.';
+    status.classList.add('show', 'bad');
+    submitting = false;
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+  });
+});
+
+// ── SMOOTH SCROLL TO FORM (respects reduced motion) ──
+var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.querySelectorAll('[data-scroll]').forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    var targetId = link.getAttribute('href');
+    if (!targetId || targetId.charAt(0) !== '#') return;
+    var target = document.querySelector(targetId);
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+  });
+});
+
+// ── FAQ ACCORDION (scoped; independent of the main site's toggleFaq) ──
+var faqList = document.getElementById('gomlFaq');
+if (faqList) {
+  faqList.querySelectorAll('.goml-faq-q').forEach(function(q) {
+    q.addEventListener('click', function() {
+      var item = q.parentElement;
+      var wasOpen = item.classList.contains('open');
+      faqList.querySelectorAll('.goml-faq-item').forEach(function(i) { i.classList.remove('open'); });
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+}
+
+});
