@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="format-detection" content="telephone=no">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Golden Oak Painting mailer offer: $1,000 off your painting project. Answer three quick questions to lock in your discount and book a free estimate.">
+<meta name="author" content="Golden Oak Painting">
+<title>$1,000 Off Your Painting Project | Golden Oak Painting Mailer Offer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="mailing.css">
+</head>
+<body class="goml">
+
+<header class="goml-header">
+  <div class="goml-header-inner">
+    <a href="/" class="goml-logo" aria-label="Golden Oak Painting home">
+      <img src="https://cdn.prod.website-files.com/67cbada18d07464c05c5ebd4/68ad2a985d8bb816f4c9b958_GOP%20-%20Main%20Logo%20Transparent%20(1).png" alt="Golden Oak Painting">
+    </a>
+    <a href="tel:+14254372322" class="goml-call">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Call Now
+    </a>
+  </div>
+</header>
+
+<!-- ═══ OFFER + FORM ═══ -->
+<section class="goml-top" id="top">
+  <div class="wrap goml-top-grid">
+
+    <!-- LEFT: OFFER (leads on mobile, left column on desktop) -->
+    <div class="goml-offer-col">
+      <div class="goml-eyebrow">✦ Eastside mailer exclusive</div>
+      <h1 class="goml-h1">Get <span>$1,000 Off</span> Your Painting Project</h1>
+
+      <div class="goml-ticket">
+        <div class="goml-ticket-top">
+          <div class="goml-offer-label">Mailer Offer</div>
+          <div class="goml-offer-cities">Redmond &middot; Kirkland &middot; Bellevue</div>
+        </div>
+        <div class="goml-ticket-perf"></div>
+        <div class="goml-ticket-bottom">
+          <div class="goml-offer-amount">$1,000 OFF</div>
+          <div class="goml-offer-scope">On qualifying painting projects</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: 3-STEP FORM (below the offer on mobile, side-by-side on desktop) -->
+    <div class="goml-form-col" id="estimate">
+      <div class="goml-form-card">
+
+        <p class="goml-form-intro">Answer three questions for your free no-pressure estimate.</p>
+
+        <div class="goml-step-progress">
+          <div class="dot done" id="goml-dot-1"></div>
+          <div class="dot" id="goml-dot-2"></div>
+          <div class="dot" id="goml-dot-3"></div>
+        </div>
+
+        <div class="goml-status" id="gomlStatus" role="status"></div>
+
+        <form id="gomlForm" novalidate>
+
+          <!-- honeypot -->
+          <input type="text" name="botcheck" class="goml-honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input type="hidden" name="access_key" value="966c3149-f695-45ce-b749-b828dcd1192e">
+          <input type="hidden" name="subject" value="New Mailer Estimate Request | Golden Oak Painting">
+          <input type="hidden" name="from_name" value="Golden Oak Painting Mailer">
+          <input type="hidden" name="redirect" value="false">
+          <input type="hidden" name="lead_source" value="Mailer">
+          <input type="hidden" name="mailer_code" value="MAILER1000">
+          <input type="hidden" name="page_url" id="gomlPageUrl" value="">
+
+          <!-- STEP 1 of 3 -->
+          <div class="goml-step active" data-step="1">
+            <div class="goml-step-label">Step 1 of 3 &middot; Takes 60 seconds</div>
+            <div class="goml-step-title">What are we painting?</div>
+            <div class="goml-step-help">Pick all that apply.</div>
+            <div class="goml-step-err" id="gomlErr1">Pick at least one so we can prepare.</div>
+            <div class="goml-check-grid">
+              <label class="goml-check"><input type="checkbox" name="services" value="Interior"> Interior</label>
+              <label class="goml-check"><input type="checkbox" name="services" value="Exterior"> Exterior</label>
+              <label class="goml-check"><input type="checkbox" name="services" value="Cabinets"> Cabinets</label>
+              <label class="goml-check"><input type="checkbox" name="services" value="Deck / Fence"> Deck / Fence</label>
+              <label class="goml-check"><input type="checkbox" name="services" value="Commercial"> Commercial</label>
+              <label class="goml-check"><input type="checkbox" name="services" value="Something else"> Something else</label>
+            </div>
+            <div class="goml-btn-row">
+              <button type="button" class="goml-btn goml-btn-primary" data-next="2">Next</button>
+            </div>
+          </div>
+
+          <!-- STEP 2 of 3 -->
+          <div class="goml-step" data-step="2">
+            <div class="goml-step-label">Step 2 of 3</div>
+            <div class="goml-step-title">When would you like to start?</div>
+            <div class="goml-step-help">No commitment. This just helps us schedule.</div>
+            <div class="goml-step-err" id="gomlErr2a">Choose one to continue.</div>
+            <div class="goml-radio-list">
+              <label class="goml-radio"><input type="radio" name="timeline" value="As soon as possible"> As soon as possible <span class="asap">ASAP</span></label>
+              <label class="goml-radio"><input type="radio" name="timeline" value="Within 1 to 2 months"> Within 1 to 2 months</label>
+              <label class="goml-radio"><input type="radio" name="timeline" value="A few months out (lock in the offer now)"> A few months out (lock in the offer now)</label>
+              <label class="goml-radio"><input type="radio" name="timeline" value="Just getting prices"> Just getting prices</label>
+            </div>
+            <div class="goml-field" id="gomlZipField">
+              <label class="goml-label" for="gomlZip">Project ZIP code</label>
+              <input class="goml-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" id="gomlZip" name="zip" placeholder="98052">
+              <div class="goml-err">Please enter a 5-digit ZIP.</div>
+            </div>
+            <div class="goml-btn-row">
+              <button type="button" class="goml-btn-back" data-back="1">Back</button>
+              <button type="button" class="goml-btn goml-btn-primary" data-next="3">Next</button>
+            </div>
+          </div>
+
+          <!-- STEP 3 of 3 -->
+          <div class="goml-step" data-step="3">
+            <div class="goml-step-label">Step 3 of 3</div>
+            <div class="goml-step-title">Where should we send your estimate?</div>
+            <div class="goml-step-help">Last step. Your <strong>$1,000 off</strong> is applied automatically.</div>
+
+            <div class="goml-row2">
+              <div class="goml-field" id="gomlFirstField">
+                <label class="goml-label" for="gomlFirst">First name <span class="req">*</span></label>
+                <input class="goml-input" type="text" id="gomlFirst" name="first_name" placeholder="Jane" autocomplete="given-name">
+                <div class="goml-err">Please enter your first name.</div>
+              </div>
+              <div class="goml-field">
+                <label class="goml-label" for="gomlLast">Last name</label>
+                <input class="goml-input" type="text" id="gomlLast" name="last_name" placeholder="Smith" autocomplete="family-name">
+              </div>
+            </div>
+
+            <div class="goml-field" id="gomlPhoneField">
+              <label class="goml-label" for="gomlPhone">Mobile phone <span class="req">*</span></label>
+              <input class="goml-input" type="tel" id="gomlPhone" name="phone" placeholder="(425) 000-0000" autocomplete="tel">
+              <div class="goml-err">Please enter a 10-digit phone number.</div>
+            </div>
+
+            <div class="goml-field" id="gomlEmailField">
+              <label class="goml-label" for="gomlEmail">Email <span class="opt">(optional)</span></label>
+              <input class="goml-input" type="email" id="gomlEmail" name="email" placeholder="jane@example.com" autocomplete="email">
+              <div class="goml-err">That email doesn't look right.</div>
+            </div>
+
+            <div class="goml-field" id="gomlAddressField">
+              <label class="goml-label" for="gomlAddress">Project address <span class="req">*</span></label>
+              <input class="goml-input" type="text" id="gomlAddress" name="address" placeholder="123 Main St, Redmond, WA" autocomplete="street-address">
+              <div class="goml-err">Please enter the project address.</div>
+            </div>
+
+            <div class="goml-field">
+              <label class="goml-label" for="gomlMsg">Anything we should know? <span class="opt">(optional)</span></label>
+              <textarea class="goml-textarea" id="gomlMsg" name="message" placeholder="Approximate size, color ideas, timing notes, etc."></textarea>
+            </div>
+
+            <label class="goml-consent">
+              <input type="checkbox" name="sms_consent" value="yes">
+              Text me about my estimate. Msg &amp; data rates may apply. Reply STOP to opt out. Not required to get an estimate.
+            </label>
+
+            <div class="goml-btn-row">
+              <button type="button" class="goml-btn-back" data-back="2">Back</button>
+              <button type="submit" class="goml-btn goml-btn-primary" id="gomlSubmitBtn">Claim My $1,000 Off</button>
+            </div>
+            <div class="goml-note">Free estimate &middot; No obligation &middot; Info never sold.</div>
+          </div>
+
+        </form>
+
+        <!-- SUCCESS STATE -->
+        <div class="goml-success" id="gomlSuccess">
+          <div class="big">🎉</div>
+          <h3>You're in, neighbor!</h3>
+          <p>Your <strong>$1,000 off</strong> is locked in. We'll reach out within 1 business day to schedule your free estimate.</p>
+          <a href="tel:+14254372322" class="call">📞 Can't wait? Call Now</a>
+          <div class="goml-success-badges">
+            <span>Licensed &amp; Insured</span>
+            <span>Written Estimates</span>
+            <span>On-Time Crews</span>
+            <span>Eastside Local</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ CUSTOMER VIDEOS + PROJECT PHOTOS ═══ -->
+<section class="goml-section cream">
+  <div class="wrap">
+    <div class="goml-section-head">
+      <div class="goml-section-eyebrow">Real Results</div>
+      <div class="goml-section-title">Real work for <span>Eastside</span> homes</div>
+    </div>
+
+    <div class="goml-proof-layout">
+
+      <!-- Photos first in source order: shows first on mobile, left column on desktop.
+           Plain 2x2 grid, each with a short caption. -->
+      <div class="goml-proof-col">
+        <div class="goml-sub-label goml-reveal">Recent Projects</div>
+        <div class="goml-proof-grid">
+          <div class="goml-proof-card goml-reveal"><img src="https://github.com/user-attachments/assets/d16e6cbf-762d-46e4-8ebe-38a9ed447080" alt="Interior painting, living room" loading="lazy"><div class="goml-proof-cap">Interior painting, living room</div></div>
+          <div class="goml-proof-card goml-reveal"><img src="https://github.com/user-attachments/assets/ff16b922-01e4-4437-a306-063b3b084278" alt="Cabinet refinishing, kitchen" loading="lazy"><div class="goml-proof-cap">Cabinet refinishing, kitchen</div></div>
+          <div class="goml-proof-card goml-reveal"><img src="https://github.com/user-attachments/assets/ce7e3dfd-44c2-42c7-9e99-6e33efa50797" alt="Interior painting, bedroom" loading="lazy"><div class="goml-proof-cap">Interior painting, bedroom</div></div>
+          <div class="goml-proof-card goml-reveal"><img src="https://github.com/user-attachments/assets/c8a838e2-2516-43b4-90f7-2a2d6cee366a" alt="Exterior painting, Seattle-area home" loading="lazy"><div class="goml-proof-cap">Exterior painting, curb appeal</div></div>
+        </div>
+      </div>
+
+      <!-- Videos second in source order: shows underneath on mobile, right column on desktop -->
+      <div class="goml-video-col">
+        <div class="goml-sub-label goml-reveal">Hear From Our Customers</div>
+        <div class="goml-video-grid">
+          <div class="goml-video-card goml-reveal" data-video-id="4YASAHGElL4" data-caption="Exterior painting customer review">
+            <div class="goml-video-frame">
+              <img class="goml-video-thumb" src="https://i.ytimg.com/vi/4YASAHGElL4/hqdefault.jpg" alt="Exterior painting customer review video thumbnail" loading="lazy">
+              <div class="goml-video-cap">Exterior painting customer review</div>
+              <button type="button" class="goml-play-btn" aria-label="Play exterior painting customer review video">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="goml-video-card goml-reveal" data-video-id="6cuHCz14meA" data-caption="Interior painting customer review">
+            <div class="goml-video-frame">
+              <img class="goml-video-thumb" src="https://i.ytimg.com/vi/6cuHCz14meA/hqdefault.jpg" alt="Interior painting customer review video thumbnail" loading="lazy">
+              <div class="goml-video-cap">Interior painting customer review</div>
+              <button type="button" class="goml-play-btn" aria-label="Play interior painting customer review video">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHAT HAPPENS NEXT ═══ -->
+<section class="goml-section light2">
+  <div class="wrap">
+    <div class="goml-section-head">
+      <div class="goml-section-eyebrow">What Happens Next</div>
+      <div class="goml-section-title">From claim to fresh paint in <span>3 steps</span></div>
+      <p class="goml-section-note">Most estimates are scheduled within a few days.</p>
+    </div>
+    <div class="goml-process-grid">
+      <div class="goml-process-step goml-reveal"><span class="goml-process-connector" aria-hidden="true"><span class="goml-process-connector-fill"></span></span><div class="goml-process-num">1</div><h4>Claim your offer</h4><p>Answer 3 quick questions above to lock in your $1,000 off.</p></div>
+      <div class="goml-process-step goml-reveal"><span class="goml-process-connector" aria-hidden="true"><span class="goml-process-connector-fill"></span></span><div class="goml-process-num">2</div><h4>Free walkthrough</h4><p>We visit, measure, and hand you a written estimate on the spot.</p></div>
+      <div class="goml-process-step goml-reveal"><span class="goml-process-connector" aria-hidden="true"><span class="goml-process-connector-fill"></span></span><div class="goml-process-num">3</div><h4>We paint, you relax</h4><p>Our crew preps, paints, and cleans up daily.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="goml-section">
+  <div class="wrap">
+    <div class="goml-section-head">
+      <div class="goml-section-eyebrow">Good To Know</div>
+      <div class="goml-section-title">Frequently asked <span>questions</span></div>
+    </div>
+    <div class="goml-faq-list" id="gomlFaq">
+      <div class="goml-faq-item goml-reveal">
+        <div class="goml-faq-q" tabindex="0" role="button" aria-expanded="false">Is the estimate free?<span class="chev">▾</span></div>
+        <div class="goml-faq-a"><div class="goml-faq-a-inner">Yes. The walkthrough and written estimate are completely free, with no obligation to book.</div></div>
+      </div>
+      <div class="goml-faq-item goml-reveal">
+        <div class="goml-faq-q" tabindex="0" role="button" aria-expanded="false">How does the $1,000 off work?<span class="chev">▾</span></div>
+        <div class="goml-faq-a"><div class="goml-faq-a-inner">It's applied directly to your written estimate when you mention or submit your mailer code.</div></div>
+      </div>
+      <div class="goml-faq-item goml-reveal">
+        <div class="goml-faq-q" tabindex="0" role="button" aria-expanded="false">Can you paint in fall and winter?<span class="chev">▾</span></div>
+        <div class="goml-faq-a"><div class="goml-faq-a-inner">Interiors, cabinets and many commercial jobs can be done year-round. Exterior work is scheduled around dry weather windows.</div></div>
+      </div>
+      <div class="goml-faq-item goml-reveal">
+        <div class="goml-faq-q" tabindex="0" role="button" aria-expanded="false">Do I need to move furniture?<span class="chev">▾</span></div>
+        <div class="goml-faq-a"><div class="goml-faq-a-inner">We'll cover this at the walkthrough. Our crew protects floors and furnishings and cleans up daily.</div></div>
+      </div>
+      <div class="goml-faq-item goml-reveal">
+        <div class="goml-faq-q" tabindex="0" role="button" aria-expanded="false">What areas do you serve?<span class="chev">▾</span></div>
+        <div class="goml-faq-a"><div class="goml-faq-a-inner">Serving Redmond, Kirkland, Bellevue, and the entire Eastside.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FINAL ESTIMATE CTA ═══ -->
+<section class="goml-closing">
+  <div class="wrap">
+    <h2>Don't miss your <span>$1,000 off</span></h2>
+    <p>Claim it in 60 seconds. No commitment to book.</p>
+    <div class="goml-closing-btns">
+      <a href="#estimate" class="goml-btn-gold" data-scroll>Claim My $1,000 Off</a>
+      <a href="tel:+14254372322" class="goml-btn-ghost2">Or Call Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="goml-footer">
+  <div class="wrap">
+    <div class="goml-footer-top">
+      <div>
+        <img src="https://cdn.prod.website-files.com/67cbada18d07464c05c5ebd4/68ad2a985d8bb816f4c9b958_GOP%20-%20Main%20Logo%20Transparent%20(1).png" alt="Golden Oak Painting">
+        <div class="goml-footer-contact">
+          <a href="tel:+14254372322" class="goml-footer-btn">📞 Call Now</a>
+          <a href="mailto:randy@goldenoakpainting.com" class="goml-footer-btn">📧 Email Now</a>
+        </div>
+      </div>
+      <div class="goml-footer-areas">
+        <div style="font-weight:700;color:#fff;margin-bottom:0.4rem">Mailer Campaign Areas</div>
+        Redmond, Kirkland &amp; Bellevue, WA
+      </div>
+    </div>
+    <p class="goml-footer-fine">Full offer terms, including minimum project size and expiration, will be confirmed when this mailer is printed. One per household. Cannot be combined with other offers.</p>
+    <div class="goml-footer-bottom">
+      <div>© 2026 Golden Oak Painting</div>
+    </div>
+  </div>
+</footer>
+
+<!-- STICKY MOBILE BAR -->
+<div class="goml-stickybar" id="gomlSticky">
+  <a href="tel:+14254372322" class="call">📞 Call Now</a>
+  <a href="#estimate" class="claim" data-scroll>Claim $1,000 Off</a>
+</div>
+
+<script src="mailing.js"></script>
+</body>
+</html>

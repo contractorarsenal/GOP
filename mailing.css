@@ -1,0 +1,343 @@
+/* ============================================================
+   GOLDEN OAK PAINTING — /mailing campaign landing page
+   Scoped stylesheet. Not loaded by any other page. Reuses the
+   site's brand tokens (see styles.css :root) so the page matches
+   the rest of goldenoakpainting.com, but all layout/components
+   here are namespaced under .goml- so nothing here can leak into
+   or collide with the main site stylesheet.
+   ============================================================ */
+
+:root{
+  --gold:#a58126;--gold2:#c9a84c;--gold3:#f0d080;
+  --green:#1e7a3e;--green2:#27a351;--green3:#43c26d;
+  --dark1:#061409;--dark2:#0a2010;--dark3:#0e3318;--dark4:#123d1e;
+  --light1:#e4f0dc;--light2:#d0e8c5;--light3:#c0ddb2;--cream:#f8f1df;
+  --text:#0d2e12;--text2:#2a5233;--text3:#4a7a52;
+  --r:8px;--r2:12px;
+}
+
+*{box-sizing:border-box}
+.goml{margin:0;font-family:'Inter',sans-serif;background:var(--light1);color:var(--text);line-height:1.6;overflow-x:hidden}
+.goml a{color:inherit}
+.goml img{max-width:100%;height:auto;display:block}
+.goml .wrap{max-width:1180px;margin:0 auto;padding:0 1.5rem}
+
+/* ── HEADER ── */
+.goml-header{position:sticky;top:0;z-index:50;background:var(--dark2);border-bottom:1px solid rgba(201,168,76,0.18)}
+.goml-header-inner{display:flex;align-items:center;justify-content:space-between;padding:0.9rem 1.5rem;max-width:1180px;margin:0 auto}
+.goml-logo img{height:46px;width:auto}
+.goml-call{display:inline-flex;align-items:center;gap:0.45rem;background:var(--gold);color:var(--dark1)!important;font-weight:800;font-size:0.86rem;text-decoration:none;padding:0.5rem 1rem;border-radius:20px;transition:background-color 0.2s,transform 0.2s}
+.goml-call:hover{background:var(--gold3);transform:translateY(-1px)}
+
+/* ── OFFER + FORM ── */
+.goml-top{
+  background:var(--dark1) url('https://github.com/user-attachments/assets/9448c781-0e2a-4d36-890d-22407d05c403') center/cover no-repeat;
+  position:relative;padding:2.75rem 0 3rem;
+}
+.goml-top::before{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(4,16,8,0.92) 0%,rgba(8,28,14,0.88) 55%,rgba(4,16,8,0.94) 100%);z-index:1}
+.goml-top-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr 1fr;gap:2.5rem;align-items:start}
+
+/* Eyebrow + H1 + ticket read as one grouped unit: tighter internal
+   spacing than the old hero, and the grid now top-aligns this group
+   with the form card instead of centering it against the taller card. */
+.goml-eyebrow{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.35);border-radius:20px;padding:0.35rem 0.9rem;font-size:0.76rem;font-weight:700;letter-spacing:0.03em;color:var(--gold3);margin-bottom:0.65rem}
+.goml-h1{font-size:clamp(1.9rem,3.6vw,2.6rem);font-weight:800;line-height:1.14;color:#fff;letter-spacing:-0.02em;text-shadow:2px 4px 16px rgba(0,0,0,0.4);margin-bottom:0.45rem;max-width:21ch;text-wrap:balance}
+.goml-h1 span{color:var(--gold3)}
+
+/* ── OFFER TICKET: cream/gold/dark-green, side notches, perforated divider ── */
+.goml-ticket{position:relative;background:var(--light1);border:1.5px solid var(--gold);border-radius:var(--r2);box-shadow:0 16px 40px rgba(0,0,0,0.35);margin-bottom:1.15rem}
+.goml-ticket::before,.goml-ticket::after{content:'';position:absolute;top:52px;width:22px;height:22px;border-radius:50%;background:var(--dark2);z-index:2;transform:translateY(-50%)}
+.goml-ticket::before{left:-11px}
+.goml-ticket::after{right:-11px}
+.goml-ticket-top{display:flex;align-items:center;justify-content:space-between;gap:0.6rem;flex-wrap:wrap;padding:0.8rem 1.3rem}
+.goml-offer-label{font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3)}
+.goml-offer-cities{font-size:0.72rem;font-weight:700;color:var(--dark2);background:rgba(165,129,38,0.14);border:1px solid var(--gold);border-radius:6px;padding:0.15rem 0.55rem;white-space:nowrap}
+.goml-ticket-perf{height:0;border-top:2px dashed rgba(165,129,38,0.55);margin:0 1.3rem}
+.goml-ticket-bottom{padding:0.85rem 1.3rem 1rem}
+.goml-offer-amount{position:relative;font-size:clamp(2.1rem,4.4vw,2.9rem);font-weight:800;color:var(--dark1);line-height:1;letter-spacing:-0.01em}
+.goml-offer-scope{font-size:0.86rem;font-weight:600;color:var(--text2);margin-top:0.4rem}
+
+/* Scratch-off reveal: this canvas is only ever created by JS, and only
+   when motion is allowed, so the "$1,000 OFF" text underneath is the
+   default, permanent state. It covers only the amount -- never the
+   headline, ticket wording, or cities -- and never affects layout. */
+.goml-scratch-canvas{position:absolute;inset:0;z-index:5;pointer-events:none}
+
+/* ── FORM CARD ── */
+.goml-form-card{background:#fff;border-radius:16px;border:1.5px solid rgba(30,122,62,0.15);box-shadow:0 12px 40px rgba(0,0,0,0.25);padding:1.75rem}
+.goml-form-intro{font-size:0.95rem;font-weight:700;color:var(--text);line-height:1.5;margin-bottom:1.1rem}
+.goml-step-progress{display:flex;align-items:center;gap:0.4rem;margin-bottom:1.1rem}
+.goml-step-progress .dot{flex:1;height:5px;border-radius:3px;background:rgba(30,122,62,0.15);transition:background-color 0.32s cubic-bezier(.22,.8,.36,1),transform 0.32s cubic-bezier(.22,.8,.36,1)}
+.goml-step-progress .dot.done{background:var(--green)}
+.goml-step-progress .dot.pulse{animation:gomlDotPulse 0.32s cubic-bezier(.22,.8,.36,1)}
+@keyframes gomlDotPulse{0%{transform:scaleY(1)}40%{transform:scaleY(1.9)}100%{transform:scaleY(1)}}
+.goml-step-label{font-size:0.72rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem}
+.goml-step-title{font-size:1.25rem;font-weight:800;color:var(--text);margin-bottom:0.25rem;line-height:1.25}
+.goml-step-help{font-size:0.83rem;color:var(--text2);margin-bottom:1.25rem}
+
+.goml-step{display:none}
+.goml-step.active{display:block;animation:gomlStepIn 0.32s cubic-bezier(.22,.8,.36,1) both}
+.goml-step.active.dir-back{animation-name:gomlStepInBack}
+@keyframes gomlStepIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+@keyframes gomlStepInBack{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
+
+.goml-check-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-bottom:0.4rem}
+.goml-check{display:flex;align-items:center;gap:0.6rem;border:1.5px solid rgba(30,122,62,0.22);border-radius:var(--r);padding:0.75rem 0.85rem;cursor:pointer;font-size:0.86rem;font-weight:600;color:var(--text2);transition:border-color 0.15s,background-color 0.15s,transform 0.15s;user-select:none}
+.goml-check:hover{border-color:var(--gold)}
+.goml-check input{accent-color:var(--green);width:16px;height:16px;flex-shrink:0}
+.goml-check.sel{border-color:var(--green);background:rgba(30,122,62,0.07);color:var(--text)}
+.goml-check.pop{animation:gomlPop 0.28s ease}
+@keyframes gomlPop{0%{transform:scale(1)}45%{transform:scale(1.035)}100%{transform:scale(1)}}
+
+.goml-radio-list{display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1rem}
+.goml-radio{display:flex;align-items:center;gap:0.65rem;border:1.5px solid rgba(30,122,62,0.22);border-radius:var(--r);padding:0.75rem 0.9rem;cursor:pointer;font-size:0.88rem;font-weight:600;color:var(--text2);transition:border-color 0.15s,background-color 0.15s,transform 0.15s}
+.goml-radio:hover{border-color:var(--gold)}
+.goml-radio input{accent-color:var(--green);width:16px;height:16px;flex-shrink:0}
+.goml-radio.sel{border-color:var(--green);background:rgba(30,122,62,0.07);color:var(--text)}
+.goml-radio.pop{animation:gomlPop 0.28s ease}
+.goml-radio .asap{font-size:0.68rem;font-weight:800;color:var(--gold);background:rgba(165,129,38,0.12);border-radius:5px;padding:0.1rem 0.4rem;margin-left:auto}
+
+.goml-field{margin-bottom:1.05rem}
+.goml-label{display:block;font-size:0.8rem;font-weight:700;color:var(--text);margin-bottom:0.4rem}
+.goml-label .req{color:var(--gold)}
+.goml-label .opt{font-weight:500;color:var(--text3);font-size:0.75rem}
+.goml-input,.goml-textarea{width:100%;padding:0.72rem 1rem;border:1.5px solid rgba(30,122,62,0.25);border-radius:8px;font-size:0.88rem;font-family:inherit;color:var(--text);background:#fff;outline:none;transition:border-color 0.2s}
+.goml-input:focus,.goml-textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(30,122,62,0.1)}
+.goml-textarea{min-height:85px;resize:vertical;line-height:1.6}
+.goml-row2{display:grid;grid-template-columns:1fr 1fr;gap:0.85rem}
+.goml-err{display:none;color:#c0392b;font-size:0.78rem;font-weight:600;margin-top:0.35rem}
+.goml-field.err .goml-input,.goml-field.err .goml-textarea{border-color:#c0392b}
+.goml-field.err .goml-err,.goml-step-err{display:block}
+.goml-step-err{display:none;background:#fdecea;border:1px solid #f5c2bc;color:#c0392b;font-size:0.82rem;font-weight:600;border-radius:8px;padding:0.6rem 0.85rem;margin-bottom:0.9rem}
+
+.goml-consent{display:flex;align-items:flex-start;gap:0.6rem;font-size:0.76rem;color:var(--text3);line-height:1.55;margin-bottom:1.1rem}
+.goml-consent input{margin-top:0.2rem;accent-color:var(--green);flex-shrink:0}
+
+.goml-btn-row{display:flex;gap:0.75rem;margin-top:0.3rem}
+.goml-btn{flex:1;padding:0.9rem;border-radius:8px;font-size:0.92rem;font-weight:800;border:none;cursor:pointer;transition:all 0.2s;text-align:center}
+.goml-btn-primary{background:var(--green);color:#fff}
+.goml-btn-primary:hover{background:var(--gold);color:var(--dark1)}
+.goml-btn-primary:disabled{opacity:0.6;cursor:not-allowed}
+.goml-btn-back{flex:0 0 auto;background:transparent;border:1.5px solid rgba(30,122,62,0.25);color:var(--text2);padding:0.9rem 1.3rem}
+.goml-btn-back:hover{border-color:var(--gold);color:var(--gold)}
+.goml-note{font-size:0.74rem;color:var(--text3);text-align:center;margin-top:0.85rem}
+
+.goml-honey{position:absolute;left:-9999px;opacity:0}
+
+.goml-status{display:none;border-radius:8px;padding:0.8rem 1rem;font-size:0.86rem;font-weight:600;margin-bottom:1rem}
+.goml-status.show{display:block}
+.goml-status.ok{background:rgba(52,168,83,0.12);color:#1e7a3e;border:1px solid rgba(52,168,83,0.3)}
+.goml-status.bad{background:rgba(234,67,53,0.1);color:#c0392b;border:1px solid rgba(234,67,53,0.3)}
+
+.goml-success{display:none;text-align:center;padding:0.5rem 0 0.25rem;opacity:0;transform:translateY(10px) scale(0.97)}
+.goml-success.show{display:block;opacity:1;transform:none;transition:opacity 0.4s ease,transform 0.4s cubic-bezier(.22,.8,.36,1)}
+.goml-success .big{font-size:2.4rem;margin-bottom:0.5rem;display:inline-block}
+.goml-success.show .big{animation:gomlBigPop 0.5s cubic-bezier(.22,1.2,.36,1) 0.1s both}
+@keyframes gomlBigPop{0%{transform:scale(0.4);opacity:0}60%{transform:scale(1.15);opacity:1}100%{transform:scale(1)}}
+.goml-success h3{font-size:1.4rem;font-weight:800;color:var(--text);margin-bottom:0.6rem}
+.goml-success p{font-size:0.92rem;color:var(--text2);line-height:1.7;margin-bottom:1rem}
+.goml-success .call{display:inline-flex;align-items:center;gap:0.4rem;color:var(--green);font-weight:700;font-size:0.9rem;text-decoration:none;margin-bottom:1.1rem}
+.goml-success-badges{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center}
+.goml-success-badges span{font-size:0.72rem;font-weight:700;color:var(--text2);background:rgba(30,122,62,0.08);border:1px solid rgba(30,122,62,0.2);border-radius:20px;padding:0.3rem 0.7rem}
+
+/* ── ENTRANCE: hero text, ticket, bullets, form card -- one coordinated
+   sequence on load. The ticket gets its own slight tilt+scale ("dealt
+   into place") so it reads as a distinct object, but its delay
+   overlaps the text instead of trailing after it, so the whole hero
+   arrives as one beat rather than several separate reveals. ── */
+.goml-eyebrow,.goml-h1{animation:gomlEnter 0.5s cubic-bezier(.22,.8,.36,1) both}
+.goml-h1{animation-delay:0.06s}
+.goml-ticket{animation:gomlTicketIn 0.5s cubic-bezier(.22,.8,.36,1) both;animation-delay:0.14s}
+.goml-form-card{animation:gomlEnterScale 0.5s cubic-bezier(.22,.8,.36,1) both;animation-delay:0.16s}
+@keyframes gomlEnter{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes gomlEnterScale{from{opacity:0;transform:translateY(16px) scale(0.98)}to{opacity:1;transform:none}}
+@keyframes gomlTicketIn{from{opacity:0;transform:translateY(16px) rotate(-1.5deg) scale(0.96)}to{opacity:1;transform:none}}
+
+/* ── REVEAL ON SCROLL (lower sections) ── */
+.goml-reveal{opacity:1;transform:none;transition:opacity 0.55s ease,transform 0.55s ease}
+.goml-reveal.goml-pre{opacity:0;transform:translateY(22px)}
+.goml-reveal.in{opacity:1;transform:none}
+
+/* ── KEYBOARD FOCUS ── */
+.goml-faq-q:focus-visible{outline:2.5px solid var(--green);outline-offset:2px;border-radius:6px}
+.goml-check:has(input:focus-visible),.goml-radio:has(input:focus-visible){outline:2.5px solid var(--green);outline-offset:2px}
+.goml-play-btn:focus-visible{outline:3px solid var(--gold3);outline-offset:-3px}
+.goml-input:focus-visible,.goml-textarea:focus-visible{outline:none}
+
+/* ── SECTION SYSTEM (shared heading scale + rhythm across every section below the fold) ── */
+.goml-section{padding:3.5rem 0}
+.goml-section.light2{background:var(--light2)}
+.goml-section.cream{background:var(--cream);padding-top:4.75rem}
+.goml-section-head{text-align:center;max-width:620px;margin:0 auto 2rem}
+.goml-section-eyebrow{font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem}
+.goml-section-title{font-size:clamp(1.5rem,2.8vw,2rem);font-weight:800;color:var(--text);line-height:1.25}
+.goml-section-title span{color:var(--gold)}
+.goml-section-note{margin-top:0.5rem;color:var(--text2);font-size:0.86rem}
+.goml-sub-label{font-size:0.76rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);margin:1.75rem 0 0.9rem}
+.goml-sub-label:first-of-type{margin-top:0}
+
+/* ── PROJECT + TESTIMONIAL LAYOUT: one combined section. Photos come
+   first in the HTML (mobile: projects, then videos, in that order);
+   on desktop this becomes photos-left / videos-right, aligned at the
+   same top edge via align-items:start. Both columns share the same
+   corner radius (--r2), caption treatment, and card spacing so they
+   read as one system, not two different components. ── */
+.goml-proof-layout{display:grid;grid-template-columns:1.2fr 1fr;gap:2.5rem;align-items:start}
+.goml-proof-col,.goml-video-col{display:flex;flex-direction:column}
+
+/* ── PHOTO GRID ── */
+/* Plain 2x2 photo grid. The aspect-ratio is tuned (not the 1.2fr/1fr
+   column split) so the 2x2 grid's total height roughly matches the
+   two-portrait-video column's height, without stretching photos or
+   distorting the 9:16 videos. */
+.goml-proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.goml-proof-card{position:relative;border-radius:var(--r2);overflow:hidden;aspect-ratio:17/12;border:2px solid transparent;transition:border-color 0.2s,box-shadow 0.2s,transform 0.2s}
+.goml-proof-card img{width:100%;height:100%;object-fit:cover;transition:transform 0.35s ease}
+.goml-proof-cap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(0deg,rgba(0,0,0,0.75),transparent);color:#fff;font-size:0.78rem;font-weight:700;padding:0.9rem 0.8rem 0.6rem}
+.goml-proof-card:hover,.goml-proof-card:focus-within{border-color:var(--gold);box-shadow:0 10px 26px rgba(30,122,62,0.22);transform:translateY(-2px)}
+.goml-proof-card:hover img,.goml-proof-card:focus-within img{transform:scale(1.06)}
+
+/* ── CUSTOMER VIDEOS: same corner radius, same caption treatment as
+   the photos (an overlay gradient caption inside the frame), same
+   hover lift -- consistent thumbnail treatment, distinct only in
+   aspect ratio (9:16, matching how these videos are framed elsewhere
+   on the site) and the play control every video card shares. ── */
+.goml-video-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;width:100%}
+.goml-video-card{text-align:center}
+.goml-video-frame{position:relative;width:100%;aspect-ratio:9/16;border-radius:var(--r2);overflow:hidden;border:2px solid transparent;box-shadow:0 8px 24px rgba(30,122,62,0.18);background:var(--dark1);transition:border-color 0.2s,box-shadow 0.2s,transform 0.2s}
+.goml-video-card:hover .goml-video-frame,.goml-video-card:focus-within .goml-video-frame{border-color:var(--gold);box-shadow:0 10px 26px rgba(30,122,62,0.22);transform:translateY(-2px)}
+.goml-video-frame img.goml-video-thumb{position:absolute;inset:0;width:100%;height:100%!important;object-fit:cover;transition:transform 0.35s ease}
+.goml-video-card:hover .goml-video-thumb,.goml-video-card:focus-within .goml-video-thumb{transform:scale(1.06)}
+.goml-video-cap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(0deg,rgba(0,0,0,0.75),transparent);color:#fff;font-size:0.78rem;font-weight:700;padding:0.9rem 0.8rem 0.6rem;text-align:left;z-index:1}
+.goml-play-btn{position:absolute;inset:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(6,20,9,0.22);border:none;cursor:pointer;padding:0;transition:background 0.2s;z-index:2}
+.goml-play-btn:hover,.goml-play-btn:focus-visible{background:rgba(6,20,9,0.4)}
+.goml-play-btn svg{width:22%;height:22%;max-width:42px;max-height:42px;color:#fff;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6))}
+.goml-video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:none;z-index:3}
+
+/* Stagger: each card's reveal transition starts slightly after the
+   one before it, so the section arrives as a short cascade rather
+   than every card popping in at once. Delay only -- duration/easing
+   stay identical to every other .goml-reveal element. */
+.goml-proof-grid .goml-proof-card:nth-child(1){transition-delay:0s}
+.goml-proof-grid .goml-proof-card:nth-child(2){transition-delay:0.07s}
+.goml-proof-grid .goml-proof-card:nth-child(3){transition-delay:0.14s}
+.goml-proof-grid .goml-proof-card:nth-child(4){transition-delay:0.21s}
+.goml-video-grid .goml-video-card:nth-child(1){transition-delay:0.05s}
+.goml-video-grid .goml-video-card:nth-child(2){transition-delay:0.12s}
+
+/* ── WHAT HAPPENS NEXT ──
+   Each step is .goml-reveal already, so the existing IntersectionObserver
+   triggers them together; a per-step transition-delay is what makes them
+   visually activate in sequence. A connecting line (track + fill) spans
+   center-to-center between consecutive steps and fills in on the same
+   stagger, reading as the sequence "drawing" itself in. Horizontal on
+   desktop, vertical once the grid stacks to one column on mobile. */
+.goml-process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.goml-process-step{position:relative;text-align:center;padding:0 0.5rem}
+.goml-process-num{position:relative;z-index:2;width:38px;height:38px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;margin:0 auto 0.75rem}
+.goml-process-step h4{font-size:0.98rem;font-weight:800;color:var(--text);margin-bottom:0.35rem}
+.goml-process-step p{font-size:0.82rem;color:var(--text2)}
+
+.goml-process-connector{position:absolute;z-index:1;top:19px;left:50%;width:calc(100% + 1.4rem);height:2px;background:rgba(30,122,62,0.18);overflow:hidden}
+.goml-process-step:last-child .goml-process-connector{display:none}
+.goml-process-connector-fill{display:block;width:100%;height:100%;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform 0.12s linear}
+.goml-process-num{transition:transform 0.25s cubic-bezier(.22,.8,.36,1),box-shadow 0.25s cubic-bezier(.22,.8,.36,1)}
+.goml-process-step.is-reached .goml-process-num{transform:scale(1.12);box-shadow:0 0 0 6px rgba(165,129,38,0.22)}
+.goml-process-step h4{transition:color 0.25s ease}
+.goml-process-step.is-reached h4{color:var(--gold)}
+
+/* ── FAQ ── */
+.goml-faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:0.75rem}
+.goml-faq-item{background:#fff;border:1.5px solid rgba(30,122,62,0.18);border-radius:var(--r2);overflow:hidden;transition:all 0.2s}
+.goml-faq-item.open{border-color:var(--gold);background:rgba(201,168,76,0.05)}
+.goml-faq-q{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.25rem;cursor:pointer;font-weight:700;color:var(--text);font-size:0.9rem}
+.goml-faq-q .chev{transition:transform 0.2s;color:var(--gold);flex-shrink:0}
+.goml-faq-item.open .chev{transform:rotate(180deg)}
+.goml-faq-a{max-height:0;overflow:hidden;transition:max-height 0.25s ease}
+.goml-faq-item.open .goml-faq-a{max-height:240px}
+.goml-faq-a-inner{padding:0 1.25rem 1.1rem;font-size:0.85rem;color:var(--text2);line-height:1.7}
+
+/* ── CLOSING CTA ── */
+.goml-closing{background:var(--dark1);padding:3.25rem 0;text-align:center;color:#fff}
+.goml-closing h2{font-size:clamp(1.6rem,3.2vw,2.1rem);font-weight:800;margin-bottom:0.5rem}
+.goml-closing h2 span{color:var(--gold3)}
+.goml-closing p{color:rgba(255,255,255,0.75);font-size:0.9rem;margin-bottom:1.5rem}
+.goml-closing-btns{display:flex;gap:0.9rem;justify-content:center;flex-wrap:wrap}
+.goml-btn-gold{padding:0.9rem 1.9rem;border-radius:8px;background:var(--gold);color:var(--dark1);font-weight:800;font-size:0.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.25s;box-shadow:0 4px 20px rgba(165,129,38,0.4);border:none;cursor:pointer}
+.goml-btn-gold:hover{background:var(--gold3);transform:translateY(-2px)}
+.goml-btn-ghost2{padding:0.9rem 1.9rem;border-radius:8px;border:1.5px solid rgba(255,255,255,0.3);color:#fff;background:rgba(255,255,255,0.06);font-weight:700;font-size:0.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem}
+
+/* ── FOOTER ── */
+.goml-footer{background:var(--dark1);color:rgba(255,255,255,0.7);padding:2.5rem 0 1.25rem;font-size:0.82rem}
+.goml-footer-top{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,0.1)}
+.goml-footer img{height:32px;margin-bottom:0.6rem}
+.goml-footer-contact{display:flex;flex-direction:column;gap:0.5rem}
+.goml-footer-btn{display:inline-flex;align-items:center;gap:0.4rem;width:fit-content;padding:0.5rem 1rem;border-radius:20px;border:1.5px solid rgba(255,255,255,0.25);color:#fff;text-decoration:none;font-weight:700;font-size:0.82rem;transition:border-color 0.2s,background-color 0.2s}
+.goml-footer-btn:hover{border-color:var(--gold3);background:rgba(255,255,255,0.08)}
+.goml-footer-areas{text-align:right}
+.goml-footer-fine{font-size:0.72rem;color:rgba(255,255,255,0.45);line-height:1.7;max-width:900px}
+.goml-footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-top:1.25rem;font-size:0.72rem;color:rgba(255,255,255,0.4)}
+.goml-footer-bottom a{color:rgba(255,255,255,0.5);text-decoration:none}
+
+/* ── STICKY MOBILE BAR ── */
+.goml-stickybar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--dark1);border-top:1px solid rgba(201,168,76,0.3);padding:0.65rem 0.9rem;gap:0.6rem;box-shadow:0 -4px 20px rgba(0,0,0,0.3)}
+.goml-stickybar a,.goml-stickybar button{flex:1;text-align:center;padding:0.75rem;border-radius:8px;font-weight:800;font-size:0.82rem;text-decoration:none;border:none;cursor:pointer}
+.goml-stickybar .call{background:rgba(255,255,255,0.1);color:#fff;border:1.5px solid rgba(255,255,255,0.25)}
+.goml-stickybar .claim{background:var(--gold);color:var(--dark1)}
+
+@media (prefers-reduced-motion: reduce){
+  .goml-step.active,.goml-step.active.dir-back,
+  .goml-eyebrow,.goml-h1,.goml-ticket,.goml-form-card,
+  .goml-step-progress .dot.pulse,.goml-check.pop,.goml-radio.pop,
+  .goml-success.show .big{animation:none}
+  .goml *{transition-duration:0.01ms !important;animation-duration:0.01ms !important;transition-delay:0ms !important;animation-delay:0ms !important;scroll-behavior:auto !important}
+}
+
+/* ============== RESPONSIVE ============== */
+@media(max-width:1000px){
+  .goml-top-grid{grid-template-columns:1fr;gap:1.75rem}
+  .goml-h1{max-width:none}
+  /* Photos are first in the HTML, so stacking here already shows
+     "projects, then videos" on mobile and tablet with no reordering. */
+  .goml-proof-layout{grid-template-columns:1fr;gap:2.25rem}
+}
+@media(max-width:680px){
+  .goml-process-grid{grid-template-columns:1fr;gap:1.5rem}
+  .goml-process-connector{top:19px;left:50%;width:2px;height:calc(100% + 1.5rem);transform:translateX(-1px)}
+  .goml-process-connector-fill{transform:scaleY(0);transform-origin:top}
+}
+@media(max-width:768px){
+  .goml-header-inner{padding:0.6rem 1.1rem}
+  .goml-logo img{height:38px}
+  .goml-top{padding:1.1rem 0 1.4rem}
+  .goml .wrap{padding:0 1.1rem}
+  .goml-section{padding:2.5rem 0}
+  .goml-section.cream{padding-top:3.25rem}
+  .goml-form-card{padding:1.35rem}
+  .goml-check-grid{grid-template-columns:1fr}
+  .goml-row2{grid-template-columns:1fr}
+  .goml-video-grid{grid-template-columns:repeat(2,1fr);max-width:360px;margin:0 auto}
+  .goml-closing-btns{flex-direction:column;align-items:stretch}
+  .goml-footer-top{flex-direction:column}
+  .goml-footer-areas{text-align:left}
+  .goml-stickybar{display:flex}
+  .goml{padding-bottom:4.2rem} /* clear the sticky bar */
+  /* Tighten the pre-form content so the form card sits close to the
+     top of the screen on phones, without removing any content. */
+  .goml-eyebrow{margin-bottom:0.6rem;padding:0.3rem 0.75rem;font-size:0.72rem}
+  .goml-h1{margin-bottom:0.5rem;font-size:clamp(1.55rem,7vw,1.9rem)}
+  .goml-ticket-top{padding:0.7rem 1.1rem}
+  .goml-ticket-perf{margin:0 1.1rem}
+  .goml-ticket-bottom{padding:0.75rem 1.1rem 0.9rem}
+  .goml-ticket{margin-bottom:0.55rem}
+  .goml-offer-amount{margin:0.1rem 0}
+  .goml-top-grid{gap:0.75rem}
+  /* Keep the 2x2 photo grid consistent at every width -- it stays
+     a compact, scannable grid instead of a long single-column scroll. */
+  .goml-proof-grid{gap:0.75rem}
+}
+@media(max-width:480px){
+  .goml-offer-amount{font-size:1.75rem}
+  .goml-step-title{font-size:1.1rem}
+  .goml-video-grid{max-width:300px;margin:0 auto}
+}
