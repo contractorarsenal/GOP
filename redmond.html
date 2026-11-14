@@ -76,7 +76,7 @@
     {"@type":"Question","name":"Do you paint homes in all Redmond neighborhoods?","acceptedAnswer":{"@type":"Answer","text":"Yes. Redmond is part of our regular King County service area, and we work throughout the city, including neighborhoods like Education Hill, Grass Lawn, Bridle Trails, Union Hill, Redmond Ridge, and Overlake."}},
     {"@type":"Question","name":"What paint brands do you use?","acceptedAnswer":{"@type":"Answer","text":"We use professional-grade products from Benjamin Moore and Sherwin-Williams, selected based on the surface and exposure of your specific project."}},
     {"@type":"Question","name":"Will you help me choose a color?","acceptedAnswer":{"@type":"Answer","text":"Yes, color consultation is included free with every project. We bring physical samples to your home so you can see how each option actually looks in your light, rather than guessing from a small chip at the store."}},
-    {"@type":"Question","name":"Is Golden Oak Painting licensed and insured to work in Redmond?","acceptedAnswer":{"@type":"Answer","text":"Yes. We are a Washington State licensed and fully insured painting contractor, and Redmond is part of our regular King County service area."}}
+    {"@type":"Question","name":"Is Golden Oak Painting licensed and insured in Redmond?","acceptedAnswer":{"@type":"Answer","text":"Yes. We are a Washington State licensed and fully insured painting contractor, and Redmond is part of our regular King County service area."}}
   ]
 }
 </script>
@@ -85,23 +85,62 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
-  .rd-chip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
-  .rd-chip{background:rgba(255,255,255,0.04);border:1.5px solid rgba(201,168,76,0.2);border-radius:var(--r2);padding:1.1rem 1.25rem}
-  .rd-chip-name{font-weight:800;color:#fff;font-size:0.92rem;margin-bottom:0.3rem}
-  .rd-chip-desc{font-size:0.8rem;color:rgba(255,255,255,0.6);line-height:1.6}
-  .rd-climate-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem}
-  .rd-climate-card{background:#fff;border:1.5px solid rgba(30,122,62,0.15);border-radius:var(--r2);padding:1.5rem;box-shadow:0 4px 16px rgba(0,0,0,0.06)}
+  /* HERO: two-column layout (headline+trust left, estimate form right) */
+  .rd-hero-grid{max-width:1280px;margin:0 auto;position:relative;z-index:3;padding:0 2rem;display:grid;grid-template-columns:1.05fr 0.95fr;gap:3rem;align-items:center}
+  .rd-hero-left h1{font-size:clamp(1.9rem,3.4vw,2.9rem);font-weight:800;line-height:1.18;color:#fff;letter-spacing:-0.02em;margin-bottom:0.9rem;text-shadow:2px 4px 16px rgba(0,0,0,0.4)}
+  .rd-hero-left h1 span{color:var(--gold3)}
+  .rd-hero-left p{color:rgba(255,255,255,0.85);font-size:1rem;line-height:1.7;max-width:520px;margin-bottom:1.5rem}
+  .rd-trust-row{display:flex;flex-wrap:wrap;gap:0.6rem;margin-bottom:1.6rem}
+  .rd-trust-item{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(255,255,255,0.08);border:1px solid rgba(201,168,76,0.3);border-radius:20px;padding:0.4rem 0.9rem;font-size:0.78rem;font-weight:600;color:rgba(255,255,255,0.92)}
+  .rd-hero-form{background:#fff;border-radius:16px;border:1.5px solid rgba(30,122,62,0.15);padding:2rem;box-shadow:0 16px 48px rgba(0,0,0,0.3)}
+  @media(max-width:900px){
+    .rd-hero-grid{grid-template-columns:1fr;gap:1.75rem;text-align:center}
+    .rd-hero-left p{margin-left:auto;margin-right:auto}
+    .rd-trust-row{justify-content:center}
+  }
+
+  /* SERVICES */
+  .rd-svc-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.1rem}
+  @media(max-width:1000px){.rd-svc-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.rd-svc-grid{grid-template-columns:1fr}}
+
+  /* WHY CHOOSE US */
+  .rd-why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem}
+  @media(max-width:1000px){.rd-why-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.rd-why-grid{grid-template-columns:1fr}}
+
+  /* CLIMATE */
+  .rd-climate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+  @media(max-width:900px){.rd-climate-grid{grid-template-columns:1fr}}
+  .rd-climate-card{background:#fff;border:1.5px solid rgba(30,122,62,0.15);border-radius:var(--r2);padding:1.6rem;box-shadow:0 4px 16px rgba(0,0,0,0.06)}
   .rd-climate-icon{font-size:1.6rem;margin-bottom:0.65rem}
-  .rd-climate-title{font-weight:700;color:var(--text);font-size:0.95rem;margin-bottom:0.5rem}
-  .rd-climate-desc{font-size:0.84rem;color:var(--text2);line-height:1.7}
-  .rd-svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.25rem}
-  .rd-gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem}
+  .rd-climate-title{font-weight:700;color:var(--text);font-size:0.98rem;margin-bottom:0.5rem}
+  .rd-climate-desc{font-size:0.86rem;color:var(--text2);line-height:1.7}
+
+  /* NEIGHBORHOODS */
+  .rd-nb-list{display:flex;flex-wrap:wrap;gap:0.6rem;justify-content:center;max-width:900px;margin:0 auto}
+  .rd-nb{background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.3);color:rgba(255,255,255,0.88);font-size:0.85rem;font-weight:600;padding:0.55rem 1.1rem;border-radius:20px}
+
+  /* GALLERY */
+  .rd-gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
+  @media(max-width:900px){.rd-gallery-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.rd-gallery-grid{grid-template-columns:1fr}}
   .rd-gallery-card{position:relative;border-radius:14px;overflow:hidden;border:2px solid rgba(165,129,38,0.35);box-shadow:0 4px 20px rgba(0,0,0,0.15);cursor:pointer}
   .rd-gallery-card img{width:100%;height:220px;object-fit:cover;display:block;transition:transform 0.5s ease}
   .rd-gallery-card:hover img{transform:scale(1.06)}
   .rd-gallery-cap{padding:0.85rem 1.1rem;background:#fff}
   .rd-gallery-cap-title{font-weight:700;color:var(--text);font-size:0.88rem}
   .rd-gallery-cap-sub{font-size:0.76rem;color:var(--text2);margin-top:0.2rem}
+
+  /* FAQ: question text without the emoji icon */
+  #faq .faq-q{padding-left:1.25rem}
+
+  /* COMPACT CLOSING CTA */
+  .rd-closing{max-width:680px;margin:0 auto;text-align:center}
+  .rd-closing h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;color:#fff;margin-bottom:0.75rem}
+  .rd-closing h2 span{color:var(--gold3)}
+  .rd-closing p{color:rgba(255,255,255,0.68);font-size:0.95rem;margin-bottom:1.75rem}
+  .rd-closing-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -158,197 +197,264 @@
   </div>
 </div>
 
-<!-- ═══ HERO ═══ -->
+<!-- ═══ HERO + ESTIMATE FORM ═══ -->
 <section class="page-hero" id="hero">
   <div class="hero-slides" id="heroSlides"></div>
-  <div class="page-hero-inner">
-    <div class="hero-badge">📍 Serving Redmond, WA</div>
-    <h1>Professional House Painters <span>in Redmond, WA</span></h1>
-    <p>Quality interior and exterior painting for Redmond homeowners, backed by careful surface preparation, clear communication from your first call to the final walkthrough, and a crew that treats your home with respect.</p>
-    <div class="hero-actions">
-      <a href="#redmond-estimate" class="btn-primary">
-        📋 Request a Free Estimate
-      </a>
+  <div class="rd-hero-grid">
+    <div class="rd-hero-left reveal">
+      <div class="hero-badge">Serving Redmond, WA</div>
+      <h1>Professional House Painters <span>in Redmond, WA</span></h1>
+      <p>Quality interior and exterior painting backed by careful surface preparation, clear communication, and a crew that treats your home with respect.</p>
+      <div class="rd-trust-row">
+        <div class="rd-trust-item">WA Licensed &amp; Insured</div>
+        <div class="rd-trust-item">5 Year Written Warranty</div>
+        <div class="rd-trust-item">Free Color Consultation</div>
+      </div>
       <a href="tel:4257258134" class="btn-ghost">
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         Call Now
       </a>
     </div>
+    <div class="reveal">
+      <div class="rd-hero-form" id="redmond-estimate">
+        <div class="cf-form-title">Request a Free Estimate</div>
+        <div class="cf-form-sub">Fill out the form and we'll be in touch shortly.</div>
+        <form id="redmondForm" action="https://api.web3forms.com/submit" method="POST">
+          <!-- Web3Forms hidden fields -->
+          <input type="hidden" name="access_key" value="fa52f0d6-efd3-45df-863d-2864d90f0949">
+          <input type="hidden" name="subject" value="New Estimate Request - Golden Oak Redmond Landing Page">
+          <input type="hidden" name="redirect" value="false">
+          <input type="hidden" name="from_name" value="Golden Oak Painting Website">
+          <!-- Lead source tracking -->
+          <input type="hidden" name="source" value="Redmond Landing Page">
+          <input type="hidden" name="location" value="Redmond, WA">
+          <input type="hidden" name="form_name" value="Golden Oak Redmond Estimate">
+          <!-- Honeypot spam prevention -->
+          <input type="checkbox" name="botcheck" style="display:none">
+
+          <div class="cf-row">
+            <div class="cf-field">
+              <label class="cf-label" for="rd-name">Your Name</label>
+              <input class="cf-input" type="text" id="rd-name" name="name" placeholder="Jane Smith" required>
+            </div>
+            <div class="cf-field">
+              <label class="cf-label" for="rd-phone">Phone Number</label>
+              <input class="cf-input" type="tel" id="rd-phone" name="phone" placeholder="(425) 000-0000" required>
+            </div>
+          </div>
+          <div class="cf-field">
+            <label class="cf-label" for="rd-email">Email Address</label>
+            <input class="cf-input" type="email" id="rd-email" name="email" placeholder="jane@example.com" required>
+          </div>
+          <div class="cf-row">
+            <div class="cf-field">
+              <label class="cf-label" for="rd-service">Painting Service</label>
+              <select class="cf-input" id="rd-service" name="service" required>
+                <option value="">Select a service...</option>
+                <option value="Interior Painting">Interior Painting</option>
+                <option value="Exterior Painting">Exterior Painting</option>
+                <option value="Cabinet Painting">Cabinet Painting</option>
+                <option value="Deck / Fence Staining">Deck / Fence Staining</option>
+                <option value="Trim / Door Painting">Trim / Door Painting</option>
+              </select>
+            </div>
+            <div class="cf-field">
+              <label class="cf-label" for="rd-zip">Project ZIP Code</label>
+              <input class="cf-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" id="rd-zip" name="zip" placeholder="98052">
+            </div>
+          </div>
+          <div class="cf-field">
+            <label class="cf-label" for="rd-memo">Tell Us About Your Project</label>
+            <textarea class="cf-textarea" id="rd-memo" name="message" placeholder="Brief description of what you need done, approximate size, timeline, etc."></textarea>
+          </div>
+          <button type="submit" class="cf-submit" id="rdSubmitBtn">Send My Estimate Request →</button>
+          <p id="rdStatus" style="display:none;margin-top:1rem;padding:0.75rem 1rem;border-radius:8px;font-size:0.9rem;font-weight:500"></p>
+          <div class="cf-note">We respond within 24 hours. Free estimate, no obligation.</div>
+        </form>
+
+        <script>
+          (function() {
+            var form = document.getElementById('redmondForm');
+            var submitting = false;
+            form.addEventListener('submit', async function(e) {
+              e.preventDefault();
+              if (submitting) return;
+              submitting = true;
+              var btn = document.getElementById('rdSubmitBtn');
+              var status = document.getElementById('rdStatus');
+              btn.disabled = true;
+              btn.textContent = 'Sending…';
+              try {
+                var res = await fetch('https://api.web3forms.com/submit', {
+                  method: 'POST',
+                  body: new FormData(this)
+                });
+                var data = await res.json();
+                if (data.success) {
+                  status.textContent = "✅ Thanks! Your message was sent. We'll be in touch within 24 hours.";
+                  status.style.background = 'rgba(52,168,83,0.12)';
+                  status.style.color = '#34A853';
+                  status.style.border = '1px solid rgba(52,168,83,0.3)';
+                  status.style.display = 'block';
+                  this.reset();
+                  btn.textContent = 'Sent!';
+                  if (typeof gtag === 'function') {
+                    gtag('event', 'generate_lead', { form_id: 'redmond_estimate' });
+                  }
+                } else {
+                  throw new Error(data.message || 'Submission failed');
+                }
+              } catch (err) {
+                status.textContent = '❌ Something went wrong. Please call us at (425) 725-8134.';
+                status.style.background = 'rgba(234,67,53,0.1)';
+                status.style.color = '#EA4335';
+                status.style.border = '1px solid rgba(234,67,53,0.3)';
+                status.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = 'Send My Estimate Request →';
+                submitting = false;
+              }
+            });
+          })();
+        </script>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ═══ TRUST STRIP ═══ -->
-<div id="whystrip">
-  <div class="whystrip-inner">
-    <div class="ws-item"><div class="ws-icon">🛡</div><div class="ws-text">5 Year Written Warranty<span>Best in Snohomish &amp; King County</span></div></div>
-    <div class="ws-item"><div class="ws-icon">✅</div><div class="ws-text">WA Licensed &amp; Insured<span>Fully credentialed &amp; covered</span></div></div>
-    <div class="ws-item"><div class="ws-icon">🎨</div><div class="ws-text">Free Color Consultation<span>Samples brought to your home</span></div></div>
-    <div class="ws-item"><div class="ws-icon">💳</div><div class="ws-text">Financing Available<span>Flexible payment options</span></div></div>
-    <div class="ws-item"><div class="ws-icon">📋</div><div class="ws-text">Bid Is Final<span>No surprise charges, ever</span></div></div>
-  </div>
-</div>
-
 <!-- ═══ PAINTING SERVICES ═══ -->
-<section id="rd-services">
+<section id="rd-services" style="background:linear-gradient(160deg,var(--dark1) 0%,var(--dark3) 50%,var(--dark2) 100%)">
   <div class="section-inner">
     <div class="svc-section-head reveal">
-      <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem">Redmond Painting Services</div>
       <h2>Painting Services for <span>Redmond Homeowners</span></h2>
-      <p>Whether you're refreshing a single room or repainting the whole exterior, we bring the same careful prep and clean finish to every Redmond home.</p>
+      <p>The same careful prep and clean finish, on every project, whatever the scope.</p>
     </div>
     <div class="rd-svc-grid reveal">
       <div class="svc-card featured">
         <div class="svc-icon">🖼</div>
-        <div class="svc-title">Interior House Painting</div>
-        <div class="svc-desc">A fresh coat of interior paint is one of the fastest ways to make a Redmond home feel updated and well cared for. We protect your floors and furniture, patch and sand walls before priming, and leave crisp, clean lines in every room.</div>
-        <a href="/services" style="font-size:0.82rem;font-weight:700;color:var(--gold3);text-decoration:none">See Interior Painting →</a>
+        <div class="svc-title">Interior Painting</div>
+        <div class="svc-desc">Fresh, crisp walls and trim, with floors and furniture protected throughout.</div>
+        <a href="/services" style="font-size:0.8rem;font-weight:700;color:var(--gold3);text-decoration:none">Learn more →</a>
       </div>
       <div class="svc-card featured">
         <div class="svc-icon">🏠</div>
-        <div class="svc-title">Exterior House Painting</div>
-        <div class="svc-desc">Redmond's wet winters and warm, dry summers both put real demands on exterior paint. We prioritize thorough scraping, sanding, and priming before any topcoat goes on, so the finish holds up through every Pacific Northwest season.</div>
-        <a href="/services" style="font-size:0.82rem;font-weight:700;color:var(--gold3);text-decoration:none">See Exterior Painting →</a>
+        <div class="svc-title">Exterior Painting</div>
+        <div class="svc-desc">Thorough prep and weather-ready coatings built for Redmond's seasons.</div>
+        <a href="/services" style="font-size:0.8rem;font-weight:700;color:var(--gold3);text-decoration:none">Learn more →</a>
       </div>
       <div class="svc-card featured">
         <div class="svc-icon">🪵</div>
-        <div class="svc-title">Cabinet Painting &amp; Refinishing</div>
-        <div class="svc-desc">Give your kitchen or bathroom a dramatic update without a full remodel. We degrease and sand every surface, apply bonding primers built for cabinetry, and spray durable topcoats for a smooth, showroom-quality finish.</div>
-        <a href="/services" style="font-size:0.82rem;font-weight:700;color:var(--gold3);text-decoration:none">See Cabinet Refinishing →</a>
+        <div class="svc-title">Cabinet Painting</div>
+        <div class="svc-desc">A showroom-smooth refresh for kitchens and baths, no remodel required.</div>
+        <a href="/services" style="font-size:0.8rem;font-weight:700;color:var(--gold3);text-decoration:none">Learn more →</a>
       </div>
       <div class="svc-card">
         <div class="svc-icon">🌿</div>
         <div class="svc-title">Deck &amp; Fence Staining</div>
-        <div class="svc-desc">Restore and protect your deck or fence through Redmond's wet winters and sunny summers. We clean, strip, and apply coatings built for real outdoor exposure.</div>
-        <a href="/services" style="font-size:0.82rem;font-weight:700;color:var(--gold3);text-decoration:none">See Deck Staining →</a>
+        <div class="svc-desc">Cleaned, prepped, and sealed to hold up to real outdoor exposure.</div>
+        <a href="/services" style="font-size:0.8rem;font-weight:700;color:var(--gold3);text-decoration:none">Learn more →</a>
       </div>
       <div class="svc-card">
         <div class="svc-icon">🚪</div>
         <div class="svc-title">Trim &amp; Door Painting</div>
-        <div class="svc-desc">Trim, fascia, and doors take some of the hardest wear on a home. As part of our interior and exterior work, we give these details the same careful prep and crisp finish as the rest of the project, no shortcuts.</div>
-        <a href="/services" style="font-size:0.82rem;font-weight:700;color:var(--gold3);text-decoration:none">See Our Services →</a>
+        <div class="svc-desc">The same careful prep and crisp finish, down to the smallest detail.</div>
+        <a href="/services" style="font-size:0.8rem;font-weight:700;color:var(--gold3);text-decoration:none">Learn more →</a>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ═══ WHY REDMOND HOMEOWNERS CHOOSE US ═══ -->
-<section style="background:linear-gradient(160deg,var(--dark1) 0%,var(--dark3) 100%);padding:5rem 2rem">
+<section style="background:var(--light1)">
   <div class="section-inner">
-    <div style="text-align:center;margin-bottom:3rem" class="reveal">
-      <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold2);margin-bottom:0.5rem">Why Golden Oak</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;color:#fff;margin-bottom:0.5rem">Why Redmond Homeowners Choose <span style="color:var(--gold3)">Golden Oak Painting</span></h2>
-      <p style="color:rgba(255,255,255,0.6);max-width:580px;margin:0 auto;font-size:0.95rem">Quality surface preparation, clear communication, and respect for your home and your time, on every project.</p>
+    <div style="text-align:center;margin-bottom:2.5rem" class="reveal">
+      <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem">Why Golden Oak</div>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;color:var(--text);margin-bottom:0.5rem">Why Redmond Homeowners Choose <span style="color:var(--green2)">Golden Oak Painting</span></h2>
     </div>
-    <div class="rd-svc-grid reveal">
-      <div style="background:rgba(255,255,255,0.03);border:1.5px solid rgba(201,168,76,0.2);border-radius:14px;padding:1.75rem">
-        <div style="font-size:2rem;margin-bottom:1rem">📋</div>
-        <div style="font-weight:800;color:#fff;font-size:1rem;margin-bottom:0.5rem">Written Proposals in 24hrs</div>
-        <div style="font-size:0.83rem;color:rgba(255,255,255,0.6);line-height:1.7">After your free on-site walkthrough, you receive a detailed written proposal with exact scope, products, and final price, within one business day.</div>
+    <div class="rd-why-grid reveal">
+      <div style="background:#fff;border:1.5px solid rgba(30,122,62,0.15);border-radius:14px;padding:1.6rem;box-shadow:0 4px 16px rgba(0,0,0,0.06)">
+        <div style="font-size:1.8rem;margin-bottom:0.75rem">📋</div>
+        <div style="font-weight:800;color:var(--text);font-size:0.95rem;margin-bottom:0.5rem">Written Proposals in 24hrs</div>
+        <div style="font-size:0.84rem;color:var(--text2);line-height:1.65">A detailed written proposal with exact scope and price, within one business day of your free walkthrough.</div>
       </div>
-      <div style="background:rgba(255,255,255,0.03);border:1.5px solid rgba(201,168,76,0.2);border-radius:14px;padding:1.75rem">
-        <div style="font-size:2rem;margin-bottom:1rem">🛡</div>
-        <div style="font-weight:800;color:#fff;font-size:1rem;margin-bottom:0.5rem">Our Bid Is Final. Always.</div>
-        <div style="font-size:0.83rem;color:rgba(255,255,255,0.6);line-height:1.7">When we give you a price, that's the price. We do not add surprise charges mid-project or hit you with fees at the end.</div>
+      <div style="background:#fff;border:1.5px solid rgba(30,122,62,0.15);border-radius:14px;padding:1.6rem;box-shadow:0 4px 16px rgba(0,0,0,0.06)">
+        <div style="font-size:1.8rem;margin-bottom:0.75rem">🛡</div>
+        <div style="font-weight:800;color:var(--text);font-size:0.95rem;margin-bottom:0.5rem">Our Bid Is Final</div>
+        <div style="font-size:0.84rem;color:var(--text2);line-height:1.65">When we give you a price, that's the price. No surprise charges mid-project or fees at the end.</div>
       </div>
-      <div style="background:rgba(255,255,255,0.03);border:1.5px solid rgba(201,168,76,0.2);border-radius:14px;padding:1.75rem">
-        <div style="font-size:2rem;margin-bottom:1rem">💬</div>
-        <div style="font-weight:800;color:#fff;font-size:1rem;margin-bottom:0.5rem">Daily Updates, Always</div>
-        <div style="font-size:0.83rem;color:rgba(255,255,255,0.6);line-height:1.7">You never have to wonder what's happening with your project. We check in proactively every day, what was done, what's next, any decisions needed.</div>
+      <div style="background:#fff;border:1.5px solid rgba(30,122,62,0.15);border-radius:14px;padding:1.6rem;box-shadow:0 4px 16px rgba(0,0,0,0.06)">
+        <div style="font-size:1.8rem;margin-bottom:0.75rem">🎨</div>
+        <div style="font-weight:800;color:var(--text);font-size:0.95rem;margin-bottom:0.5rem">Free Color Consultation</div>
+        <div style="font-size:0.84rem;color:var(--text2);line-height:1.65">Benjamin Moore and Sherwin-Williams samples brought to your home, so you see the real color in your light.</div>
       </div>
-      <div style="background:rgba(255,255,255,0.03);border:1.5px solid rgba(201,168,76,0.2);border-radius:14px;padding:1.75rem">
-        <div style="font-size:2rem;margin-bottom:1rem">🎨</div>
-        <div style="font-weight:800;color:#fff;font-size:1rem;margin-bottom:0.5rem">Color Consultation Included Free</div>
-        <div style="font-size:0.83rem;color:rgba(255,255,255,0.6);line-height:1.7">We bring Benjamin Moore and Sherwin-Williams samples directly to your home so you can see exactly how each color looks in your light.</div>
-      </div>
-      <div style="background:rgba(255,255,255,0.03);border:1.5px solid rgba(201,168,76,0.2);border-radius:14px;padding:1.75rem">
-        <div style="font-size:2rem;margin-bottom:1rem">🧹</div>
-        <div style="font-weight:800;color:#fff;font-size:1rem;margin-bottom:0.5rem">Daily Cleanup. Zero Mess.</div>
-        <div style="font-size:0.83rem;color:rgba(255,255,255,0.6);line-height:1.7">At the end of every workday, we clean up the site, floors wiped, tools stored, furniture covered. No living in a construction zone between coats.</div>
-      </div>
-      <div style="background:rgba(201,168,76,0.08);border:2px solid rgba(201,168,76,0.35);border-radius:14px;padding:1.75rem">
-        <div style="font-size:2rem;margin-bottom:1rem">🏅</div>
-        <div style="font-weight:800;color:var(--gold3);font-size:1rem;margin-bottom:0.5rem">5 Year Written Warranty</div>
-        <div style="font-size:0.83rem;color:rgba(255,255,255,0.65);line-height:1.7">Our warranty covers peeling, bubbling, and workmanship defects. It is written, signed, and yours, one of the strongest guarantees offered by any painter in the area.</div>
+      <div style="background:rgba(201,168,76,0.08);border:2px solid rgba(201,168,76,0.35);border-radius:14px;padding:1.6rem">
+        <div style="font-size:1.8rem;margin-bottom:0.75rem">🏅</div>
+        <div style="font-weight:800;color:var(--gold);font-size:0.95rem;margin-bottom:0.5rem">5 Year Written Warranty</div>
+        <div style="font-size:0.84rem;color:var(--text2);line-height:1.65">Written, signed coverage against peeling and workmanship defects. One of the strongest guarantees in the area.</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ═══ PAINTING IN REDMOND'S CLIMATE ═══ -->
-<section style="padding:5rem 2rem;background:var(--light1)">
+<section style="background:var(--dark1)">
   <div class="section-inner">
     <div style="text-align:center;margin-bottom:2.5rem" class="reveal">
-      <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem">Homeowner Education</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;color:var(--text);margin-bottom:0.5rem">Painting in <span style="color:var(--green2)">Redmond's Climate</span></h2>
-      <p style="color:var(--text2);max-width:640px;margin:0 auto;font-size:0.95rem">The Pacific Northwest is beautiful, but it's also demanding on exterior paint. Here's what actually matters for a finish that lasts.</p>
+      <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold3);margin-bottom:0.5rem">Homeowner Education</div>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;color:#fff;margin-bottom:0.5rem">Painting in <span style="color:var(--gold3)">Redmond's Climate</span></h2>
     </div>
     <div class="rd-climate-grid reveal">
       <div class="rd-climate-card">
         <div class="rd-climate-icon">🌧</div>
-        <div class="rd-climate-title">Rain &amp; Moisture</div>
-        <div class="rd-climate-desc">Redmond gets long stretches of wet weather, especially fall through early spring. Trapped moisture under paint is one of the biggest causes of peeling and bubbling, which is why surfaces need to be fully dry before we apply anything.</div>
-      </div>
-      <div class="rd-climate-card">
-        <div class="rd-climate-icon">🔍</div>
-        <div class="rd-climate-title">Surface Prep &amp; Adhesion</div>
-        <div class="rd-climate-desc">Paint only bonds as well as the surface underneath it. We scrape, sand, spot-prime, and caulk before any topcoat goes on, because skipping this step is the single biggest reason exterior paint fails early in this climate.</div>
-      </div>
-      <div class="rd-climate-card">
-        <div class="rd-climate-icon">☀️</div>
-        <div class="rd-climate-title">Drying Conditions</div>
-        <div class="rd-climate-desc">Paint needs stable temperature and low humidity to cure properly. We track the forecast closely and schedule exterior work around real dry windows rather than guessing, so the finish has time to set up correctly.</div>
-      </div>
-      <div class="rd-climate-card">
-        <div class="rd-climate-icon">🏡</div>
-        <div class="rd-climate-title">Exterior Maintenance</div>
-        <div class="rd-climate-desc">Checking caulking, trim, and high-exposure areas (south and west-facing walls especially) once a year helps catch small issues before they turn into bigger repairs down the road.</div>
+        <div class="rd-climate-title">Moisture &amp; Exterior Prep</div>
+        <div class="rd-climate-desc">Redmond's wet stretches make surface prep the difference maker. We scrape, sand, spot-prime, and caulk before any topcoat goes on, since trapped moisture under paint is the leading cause of peeling.</div>
       </div>
       <div class="rd-climate-card">
         <div class="rd-climate-icon">📅</div>
-        <div class="rd-climate-title">Choosing the Right Season</div>
-        <div class="rd-climate-desc">Late spring through early fall typically offers the most consistent dry days for exterior work, but a clear, dry stretch any time of year can be workable. We'll help you plan around the forecast, not just the calendar.</div>
+        <div class="rd-climate-title">Choosing the Right Conditions</div>
+        <div class="rd-climate-desc">Paint needs stable, dry weather to cure properly. We schedule exterior work around real forecasts, not the calendar, so the finish has time to set up correctly.</div>
       </div>
       <div class="rd-climate-card">
         <div class="rd-climate-icon">🖌</div>
-        <div class="rd-climate-title">Interior Work Year-Round</div>
-        <div class="rd-climate-desc">None of this applies indoors. Interior painting and cabinet refinishing can be scheduled any time of year, rain or shine, since they're not affected by outdoor weather windows.</div>
+        <div class="rd-climate-title">Interior Painting Year-Round</div>
+        <div class="rd-climate-desc">Weather windows don't apply indoors. Interior painting and cabinet refinishing can be scheduled any time of year, rain or shine.</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ═══ NEIGHBORHOODS SERVED ═══ -->
-<section style="padding:5rem 2rem;background:var(--dark1)">
+<section style="background:var(--dark2)">
   <div class="section-inner">
-    <div style="text-align:center;margin-bottom:2.5rem" class="reveal">
-      <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem">Service Area</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;color:#fff;margin-bottom:0.5rem">Redmond Neighborhoods <span style="color:var(--gold3)">We Serve</span></h2>
-      <p style="color:rgba(255,255,255,0.6);max-width:640px;margin:0 auto;font-size:0.95rem">Redmond is part of our regular King County service area. We paint throughout the city, including:</p>
+    <div style="text-align:center;margin-bottom:1.75rem" class="reveal">
+      <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold3);margin-bottom:0.5rem">Service Area</div>
+      <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;color:#fff;margin-bottom:0.5rem">Redmond Neighborhoods We Serve</h2>
+      <p style="color:rgba(255,255,255,0.6);font-size:0.92rem">Redmond is part of our regular King County service area.</p>
     </div>
-    <div class="rd-chip-grid reveal">
-      <div class="rd-chip"><div class="rd-chip-name">Education Hill</div><div class="rd-chip-desc">Established neighborhoods with a mix of home ages and exterior styles.</div></div>
-      <div class="rd-chip"><div class="rd-chip-name">Grass Lawn</div><div class="rd-chip-desc">Close to the Microsoft campus, with many single-family homes.</div></div>
-      <div class="rd-chip"><div class="rd-chip-name">Bridle Trails</div><div class="rd-chip-desc">Larger wooded lots where exterior maintenance matters.</div></div>
-      <div class="rd-chip"><div class="rd-chip-name">Union Hill</div><div class="rd-chip-desc">Spacious homes with room for bigger exterior projects.</div></div>
-      <div class="rd-chip"><div class="rd-chip-name">Novelty Hill</div><div class="rd-chip-desc">Newer construction alongside established streets.</div></div>
-      <div class="rd-chip"><div class="rd-chip-name">Redmond Ridge</div><div class="rd-chip-desc">Planned community with consistent architectural styles.</div></div>
-      <div class="rd-chip"><div class="rd-chip-name">The Hedges</div><div class="rd-chip-desc">Quiet residential streets close to downtown Redmond.</div></div>
-      <div class="rd-chip"><div class="rd-chip-name">Tuscany</div><div class="rd-chip-desc">Detailed exteriors that benefit from careful trim and color work.</div></div>
-      <div class="rd-chip"><div class="rd-chip-name">North Redmond</div><div class="rd-chip-desc">A mix of older and newer homes near Education Hill.</div></div>
-      <div class="rd-chip"><div class="rd-chip-name">Bear Creek</div><div class="rd-chip-desc">Homes bordering green space, where moisture-aware prep matters.</div></div>
-      <div class="rd-chip"><div class="rd-chip-name">Southeast Redmond</div><div class="rd-chip-desc">Close to the Sammamish River Trail and surrounding neighborhoods.</div></div>
-      <div class="rd-chip"><div class="rd-chip-name">Overlake</div><div class="rd-chip-desc">A busy corridor with both homes and commercial properties.</div></div>
+    <div class="rd-nb-list reveal">
+      <span class="rd-nb">Education Hill</span>
+      <span class="rd-nb">Grass Lawn</span>
+      <span class="rd-nb">Bridle Trails</span>
+      <span class="rd-nb">Union Hill</span>
+      <span class="rd-nb">Novelty Hill</span>
+      <span class="rd-nb">Redmond Ridge</span>
+      <span class="rd-nb">The Hedges</span>
+      <span class="rd-nb">Tuscany</span>
+      <span class="rd-nb">North Redmond</span>
+      <span class="rd-nb">Bear Creek</span>
+      <span class="rd-nb">Southeast Redmond</span>
+      <span class="rd-nb">Overlake</span>
     </div>
   </div>
 </section>
 
 <!-- ═══ REAL PROJECT GALLERY ═══ -->
-<section style="padding:5rem 2rem;background:var(--light1)" id="rd-gallery">
+<section style="background:var(--light1)" id="rd-gallery">
   <div class="section-inner">
-    <div style="text-align:center;margin-bottom:2.5rem" class="reveal">
+    <div style="text-align:center;margin-bottom:2.25rem" class="reveal">
       <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem">Real Results</div>
       <h2 style="font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;color:var(--text);margin-bottom:0.5rem">Our Work <span style="color:var(--green2)">Speaks for Itself</span></h2>
-      <p style="color:var(--text2);max-width:560px;margin:0 auto;font-size:0.95rem">A look at recent interior, exterior, and cabinet projects across our King &amp; Snohomish County service area. Click any photo to enlarge.</p>
+      <p style="color:var(--text2);font-size:0.92rem">Recent interior, exterior, and cabinet projects from our King &amp; Snohomish County service area.</p>
     </div>
     <div class="rd-gallery-grid reveal">
       <div class="rd-gallery-card" onclick="openLightbox('https://github.com/user-attachments/assets/9448c781-0e2a-4d36-890d-22407d05c403','Exterior Painting, Seattle Area Home')">
@@ -393,64 +499,64 @@
   <div class="section-inner">
     <div class="faq-head reveal">
       <h2>Redmond Homeowner <span>FAQs</span></h2>
-      <p>Honest answers to the questions Redmond homeowners ask us most, based on our market experience in the area.</p>
+      <p>Honest answers to the questions Redmond homeowners ask us most.</p>
     </div>
     <div class="faq-cols reveal" style="grid-template-columns:1fr">
       <div>
         <div class="faq-item open">
-          <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-icon">❓</span>How much does house painting cost in Redmond?<span class="chev">▾</span></div>
+          <div class="faq-q" onclick="toggleFaq(this)">How much does house painting cost in Redmond?<span class="chev">▾</span></div>
           <div class="faq-a"><div class="faq-a-inner">It depends on the size of your home, how many rooms or sides need coverage, and the condition of the surfaces underneath. We don't publish generic price lists because they rarely match the real job. We give every Redmond homeowner a free on-site estimate with a detailed written proposal, so you know the exact price before any work begins.</div></div>
         </div>
         <div class="faq-item" style="margin-top:0.75rem">
-          <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-icon">❓</span>When is the best time for exterior painting?<span class="chev">▾</span></div>
+          <div class="faq-q" onclick="toggleFaq(this)">When is the best time for exterior painting?<span class="chev">▾</span></div>
           <div class="faq-a"><div class="faq-a-inner">Late spring through early fall tends to offer the most reliable dry, mild days for exterior work in Redmond. That said, we plan each project around the actual weather forecast and surface conditions rather than the calendar, since a dry stretch in early spring can work just as well as one in August.</div></div>
         </div>
         <div class="faq-item" style="margin-top:0.75rem">
-          <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-icon">❓</span>Can you paint a house during the rainy season?<span class="chev">▾</span></div>
+          <div class="faq-q" onclick="toggleFaq(this)">Can you paint a house during the rainy season?<span class="chev">▾</span></div>
           <div class="faq-a"><div class="faq-a-inner">Interior painting, cabinet refinishing, and most indoor projects can be done year-round regardless of weather. Exterior painting is scheduled around dry weather windows, since paint needs the surface to be clean and dry to properly bond and cure.</div></div>
         </div>
         <div class="faq-item" style="margin-top:0.75rem">
-          <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-icon">❓</span>Is painting cabinets cheaper than replacing them?<span class="chev">▾</span></div>
+          <div class="faq-q" onclick="toggleFaq(this)">Is painting cabinets cheaper than replacing them?<span class="chev">▾</span></div>
           <div class="faq-a"><div class="faq-a-inner">Refinishing is almost always less expensive and faster than a full cabinet replacement, since you keep your existing cabinet boxes, layout, and hardware. It's a popular option for Redmond homeowners who want a kitchen or bathroom update without a full remodel.</div></div>
         </div>
         <div class="faq-item" style="margin-top:0.75rem">
-          <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-icon">❓</span>How long does interior painting take?<span class="chev">▾</span></div>
+          <div class="faq-q" onclick="toggleFaq(this)">How long does interior painting take?<span class="chev">▾</span></div>
           <div class="faq-a"><div class="faq-a-inner">Timing depends on the number of rooms, how many colors are involved, and how much prep and repair the walls need. We'll walk your home, review the scope with you, and give you a specific timeline as part of your free written estimate.</div></div>
         </div>
         <div class="faq-item" style="margin-top:0.75rem">
-          <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-icon">❓</span>How should homeowners prepare for painters?<span class="chev">▾</span></div>
+          <div class="faq-q" onclick="toggleFaq(this)">How should homeowners prepare for painters?<span class="chev">▾</span></div>
           <div class="faq-a"><div class="faq-a-inner">Clearing small items, wall decor, and anything fragile from the work area helps us move faster on day one. For exterior work, trimming back plants or furniture near the house is helpful. We'll go over anything specific to your project during the estimate walkthrough.</div></div>
         </div>
         <div class="faq-item" style="margin-top:0.75rem">
-          <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-icon">❓</span>Does an HOA need to approve exterior paint colors?<span class="chev">▾</span></div>
+          <div class="faq-q" onclick="toggleFaq(this)">Does an HOA need to approve exterior paint colors?<span class="chev">▾</span></div>
           <div class="faq-a"><div class="faq-a-inner">Many Redmond neighborhoods and communities have an HOA or covenant that reviews exterior color changes before work begins. We'd recommend checking with your HOA or community guidelines early in the planning process so there are no delays once we're ready to start.</div></div>
         </div>
         <div class="faq-item" style="margin-top:0.75rem">
-          <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-icon">❓</span>How long does exterior paint typically last?<span class="chev">▾</span></div>
+          <div class="faq-q" onclick="toggleFaq(this)">How long does exterior paint typically last?<span class="chev">▾</span></div>
           <div class="faq-a"><div class="faq-a-inner">How long exterior paint holds up depends far more on the prep work underneath it than on the paint itself. That's why we prioritize thorough scraping, sanding, and priming before any topcoat goes on, so the finish performs through real Pacific Northwest seasons rather than failing early.</div></div>
         </div>
         <div class="faq-item" style="margin-top:0.75rem">
-          <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-icon">❓</span>What factors affect the cost of painting a house?<span class="chev">▾</span></div>
+          <div class="faq-q" onclick="toggleFaq(this)">What factors affect the cost of painting a house?<span class="chev">▾</span></div>
           <div class="faq-a"><div class="faq-a-inner">The biggest factors are square footage and number of stories, the condition of the existing surface (how much prep or repair is needed), the number of colors or finishes, and whether trim, doors, or siding details add complexity. We account for all of this in your free, written on-site estimate.</div></div>
         </div>
         <div class="faq-item" style="margin-top:0.75rem">
-          <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-icon">❓</span>How do I request an estimate?<span class="chev">▾</span></div>
+          <div class="faq-q" onclick="toggleFaq(this)">How do I request an estimate?<span class="chev">▾</span></div>
           <div class="faq-a"><div class="faq-a-inner">Fill out the short form on this page or call us directly. We'll schedule a free on-site walkthrough, review your project and options with you, and follow up with a detailed written proposal, typically within 24 hours.</div></div>
         </div>
         <div class="faq-item" style="margin-top:0.75rem">
-          <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-icon">❓</span>Do you paint homes in all Redmond neighborhoods?<span class="chev">▾</span></div>
+          <div class="faq-q" onclick="toggleFaq(this)">Do you paint homes in all Redmond neighborhoods?<span class="chev">▾</span></div>
           <div class="faq-a"><div class="faq-a-inner">Yes. Redmond is part of our regular King County service area, and we work throughout the city, including neighborhoods like Education Hill, Grass Lawn, Bridle Trails, Union Hill, Redmond Ridge, and Overlake.</div></div>
         </div>
         <div class="faq-item" style="margin-top:0.75rem">
-          <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-icon">❓</span>What paint brands do you use?<span class="chev">▾</span></div>
+          <div class="faq-q" onclick="toggleFaq(this)">What paint brands do you use?<span class="chev">▾</span></div>
           <div class="faq-a"><div class="faq-a-inner">We use professional-grade products from Benjamin Moore and Sherwin-Williams, selected based on the surface and exposure of your specific project.</div></div>
         </div>
         <div class="faq-item" style="margin-top:0.75rem">
-          <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-icon">❓</span>Will you help me choose a color?<span class="chev">▾</span></div>
+          <div class="faq-q" onclick="toggleFaq(this)">Will you help me choose a color?<span class="chev">▾</span></div>
           <div class="faq-a"><div class="faq-a-inner">Yes, color consultation is included free with every project. We bring physical samples to your home so you can see how each option actually looks in your light, rather than guessing from a small chip at the store.</div></div>
         </div>
         <div class="faq-item" style="margin-top:0.75rem">
-          <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-icon">❓</span>Is Golden Oak Painting licensed and insured in Redmond?<span class="chev">▾</span></div>
+          <div class="faq-q" onclick="toggleFaq(this)">Is Golden Oak Painting licensed and insured in Redmond?<span class="chev">▾</span></div>
           <div class="faq-a"><div class="faq-a-inner">Yes. We are a Washington State licensed and fully insured painting contractor, and Redmond is part of our regular King County service area.</div></div>
         </div>
       </div>
@@ -458,124 +564,17 @@
   </div>
 </section>
 
-<!-- ═══ FINAL CONVERSION / ESTIMATE FORM ═══ -->
-<section id="redmond-estimate" style="background:linear-gradient(135deg,var(--light2) 0%,var(--light1) 100%);padding:5rem 2rem">
-  <div class="section-inner">
-    <div class="cf-grid">
-      <div class="reveal">
-        <div class="cf-info-label">Redmond, WA</div>
-        <h2 class="cf-info-title">Ready to Start Your <span>Redmond Painting Project?</span></h2>
-        <p class="cf-info-desc">Tell us a little about your project and we'll follow up with a free on-site estimate and a detailed written proposal, usually within 24 hours. No pressure, no obligation.</p>
-        <div class="cf-contact-items">
-          <div class="cf-contact-item"><div class="cf-contact-icon">📞</div><a href="tel:4257258134" style="color:inherit;text-decoration:none;font-weight:700">(425) 725-8134</a></div>
-          <div class="cf-contact-item"><div class="cf-contact-icon">📧</div><a href="mailto:randy@goldenoakpainting.com" style="color:inherit;text-decoration:none">randy@goldenoakpainting.com</a></div>
-          <div class="cf-contact-item"><div class="cf-contact-icon">📍</div>Serving Redmond &amp; the greater King County area</div>
-        </div>
-      </div>
-      <div class="reveal">
-        <div class="cf-form">
-          <div class="cf-form-title">Request a Free Estimate</div>
-          <div class="cf-form-sub">Fill out the form and we'll be in touch shortly.</div>
-          <form id="redmondForm" action="https://api.web3forms.com/submit" method="POST">
-            <!-- Web3Forms hidden fields -->
-            <input type="hidden" name="access_key" value="fa52f0d6-efd3-45df-863d-2864d90f0949">
-            <input type="hidden" name="subject" value="New Estimate Request - Golden Oak Redmond Landing Page">
-            <input type="hidden" name="redirect" value="false">
-            <input type="hidden" name="from_name" value="Golden Oak Painting Website">
-            <!-- Lead source tracking -->
-            <input type="hidden" name="source" value="Redmond Landing Page">
-            <input type="hidden" name="location" value="Redmond, WA">
-            <input type="hidden" name="form_name" value="Golden Oak Redmond Estimate">
-            <!-- Honeypot spam prevention -->
-            <input type="checkbox" name="botcheck" style="display:none">
-
-            <div class="cf-row">
-              <div class="cf-field">
-                <label class="cf-label" for="rd-name">Your Name</label>
-                <input class="cf-input" type="text" id="rd-name" name="name" placeholder="Jane Smith" required>
-              </div>
-              <div class="cf-field">
-                <label class="cf-label" for="rd-phone">Phone Number</label>
-                <input class="cf-input" type="tel" id="rd-phone" name="phone" placeholder="(425) 000-0000" required>
-              </div>
-            </div>
-            <div class="cf-field">
-              <label class="cf-label" for="rd-email">Email Address</label>
-              <input class="cf-input" type="email" id="rd-email" name="email" placeholder="jane@example.com" required>
-            </div>
-            <div class="cf-row">
-              <div class="cf-field">
-                <label class="cf-label" for="rd-service">Painting Service</label>
-                <select class="cf-input" id="rd-service" name="service" required>
-                  <option value="">Select a service...</option>
-                  <option value="Interior Painting">Interior Painting</option>
-                  <option value="Exterior Painting">Exterior Painting</option>
-                  <option value="Cabinet Painting">Cabinet Painting</option>
-                  <option value="Deck / Fence Staining">Deck / Fence Staining</option>
-                  <option value="Trim / Door Painting">Trim / Door Painting</option>
-                </select>
-              </div>
-              <div class="cf-field">
-                <label class="cf-label" for="rd-zip">Project ZIP Code</label>
-                <input class="cf-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" id="rd-zip" name="zip" placeholder="98052">
-              </div>
-            </div>
-            <div class="cf-field">
-              <label class="cf-label" for="rd-memo">Tell Us About Your Project</label>
-              <textarea class="cf-textarea" id="rd-memo" name="message" placeholder="Brief description of what you need done, approximate size, timeline, etc."></textarea>
-            </div>
-            <button type="submit" class="cf-submit" id="rdSubmitBtn">Send My Estimate Request →</button>
-            <p id="rdStatus" style="display:none;margin-top:1rem;padding:0.75rem 1rem;border-radius:8px;font-size:0.9rem;font-weight:500"></p>
-            <div class="cf-note">We respond within 24 hours. Free estimate, no obligation.</div>
-          </form>
-
-          <script>
-            (function() {
-              var form = document.getElementById('redmondForm');
-              var submitting = false;
-              form.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                if (submitting) return;
-                submitting = true;
-                var btn = document.getElementById('rdSubmitBtn');
-                var status = document.getElementById('rdStatus');
-                btn.disabled = true;
-                btn.textContent = 'Sending…';
-                try {
-                  var res = await fetch('https://api.web3forms.com/submit', {
-                    method: 'POST',
-                    body: new FormData(this)
-                  });
-                  var data = await res.json();
-                  if (data.success) {
-                    status.textContent = "✅ Thanks! Your message was sent. We'll be in touch within 24 hours.";
-                    status.style.background = 'rgba(52,168,83,0.12)';
-                    status.style.color = '#34A853';
-                    status.style.border = '1px solid rgba(52,168,83,0.3)';
-                    status.style.display = 'block';
-                    this.reset();
-                    btn.textContent = 'Sent!';
-                    if (typeof gtag === 'function') {
-                      gtag('event', 'generate_lead', { form_id: 'redmond_estimate' });
-                    }
-                  } else {
-                    throw new Error(data.message || 'Submission failed');
-                  }
-                } catch (err) {
-                  status.textContent = '❌ Something went wrong. Please call us at (425) 725-8134.';
-                  status.style.background = 'rgba(234,67,53,0.1)';
-                  status.style.color = '#EA4335';
-                  status.style.border = '1px solid rgba(234,67,53,0.3)';
-                  status.style.display = 'block';
-                  btn.disabled = false;
-                  btn.textContent = 'Send My Estimate Request →';
-                  submitting = false;
-                }
-              });
-            })();
-          </script>
-        </div>
-      </div>
+<!-- ═══ COMPACT CLOSING CTA ═══ -->
+<section id="finalcta">
+  <div class="rd-closing reveal">
+    <h2>Ready to Paint Your <span>Redmond Home?</span></h2>
+    <p>Request a free estimate above, or call us directly. No pressure, no obligation.</p>
+    <div class="rd-closing-btns">
+      <a href="tel:4257258134" class="btn-gold-hero">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Call (425) 725-8134
+      </a>
+      <a href="#redmond-estimate" class="btn-green-hero">Request Free Estimate ↑</a>
     </div>
   </div>
 </section>
